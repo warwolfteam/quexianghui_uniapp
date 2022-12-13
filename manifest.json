@@ -1,9 +1,9 @@
 {
-    "name" : "crmeb",
-    "appid" : "__UNI__E8BDBA5",
-    "description" : "crmeb商城",
+    "name" : "鹊相会",
+    "appid" : "__UNI__A1BE28B",
+    "description" : "鹊相会前端项目",
     "versionName" : "1.0.0",
-    "versionCode" : 1001,
+    "versionCode" : 1,
     "transformPx" : false,
     /* 5+App特有相关 */
     "app-plus" : {
@@ -115,5 +115,7 @@
         "statusbar" : {
             "immersed" : true
         }
-    }
+    },
+    "fallbackLocale" : "zh-Hans",
+    "locale" : "zh-Hans"
 }
