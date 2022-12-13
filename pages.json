@@ -108,7 +108,16 @@
 			"path": "pages/index/components/b_combination",
 			"style": {}
 		}
-	],
+	    ,{
+            "path" : "pages/together/together",
+            "style" :                                                                                    
+            {
+                "navigationBarTitleText": "拼桌",
+                "enablePullDownRefresh": false
+            }
+            
+        }
+    ],
 	"subPackages": [{
 		"root": "pages/users",
 		"name": "users",
@@ -448,15 +457,10 @@
 			"selectedIconPath": "static/images/1-002.png",
 			"text": "首页"
 		}, {
-			"pagePath": "pages/goods_cate/goods_cate",
+			"pagePath": "pages/together/together",
 			"iconPath": "static/images/2-001.png",
 			"selectedIconPath": "static/images/2-002.png",
-			"text": "分类"
-		}, {
-			"pagePath": "pages/order_addcart/order_addcart",
-			"iconPath": "static/images/3-001.png",
-			"selectedIconPath": "static/images/3-002.png",
-			"text": "购物车"
+			"text": "拼桌"
 		}, {
 			"pagePath": "pages/user/index",
 			"iconPath": "static/images/4-001.png",
