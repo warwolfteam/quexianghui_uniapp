@@ -1,69 +1,52 @@
 <template>
 	<view>
-		<view class="page-index"
-			:class="{'bgf':navIndex >0}">
+		<view class="page-index" :class="{'bgf':navIndex >0}">
 			<!-- #ifdef H5 -->
 			<view class="header">
 				<view class="serch-wrapper flex">
 					<view class="logo">
-						<image :src="logoUrl"
-							mode=""></image>
+						<image :src="logoUrl" mode=""></image>
 					</view>
-					<!-- <navigator url="/pages/goods_search/index" class="input" hover-class="none"><text
+					<navigator url="/pages/goods_search/index" class="input" hover-class="none"><text
 							class="iconfont icon-xiazai5"></text>
-						搜索商品</navigator> -->
+						搜索商品</navigator>
 				</view>
 			</view>
 			<!-- #endif -->
 			<!-- #ifdef MP -->
 			<view class="mp-header">
-				<view class="sys-head"
-					:style="{ height: statusBarHeight }"></view>
-				<view class="serch-box"
-					style="height: 40px;">
+				<view class="sys-head" :style="{ height: statusBarHeight }"></view>
+				<view class="serch-box" style="height: 40px;">
 					<view class="serch-wrapper flex">
 						<view class="logo">
-							<image :src="logoUrl"
-								mode=""></image>
+							<image :src="logoUrl" mode=""></image>
 						</view>
-						<!-- 	<navigator url="/pages/goods_search/index" class="input" hover-class="none"><text
+						<navigator url="/pages/goods_search/index" class="input" hover-class="none"><text
 								class="iconfont icon-xiazai5"></text>
-							搜索商品</navigator> -->
+							搜索商品</navigator>
 					</view>
 				</view>
 			</view>
 			<!-- #endif -->
 			<!-- 首页展示 -->
-			<view class="page_content"
-				:style="'margin-top:'+(marTop)+'px;'"
-				v-if="navIndex == 0">
+			<view class="page_content" :style="'margin-top:'+(marTop)+'px;'" v-if="navIndex == 0">
 				<view class="mp-bg"></view>
 				<!-- banner -->
-				<view class="swiper"
-					v-if="imgUrls.length">
-					<swiper indicator-dots="true"
-						:autoplay="true"
-						:circular="circular"
-						:interval="interval"
-						:duration="duration"
-						indicator-color="rgba(255,255,255,0.6)"
-						indicator-active-color="#fff">
-						<block v-for="(item,index) in imgUrls"
-							:key="index">
+				<view class="swiper" v-if="imgUrls.length">
+					<swiper indicator-dots="true" :autoplay="true" :circular="circular" :interval="interval"
+						:duration="duration" indicator-color="rgba(255,255,255,0.6)" indicator-active-color="#fff">
+						<block v-for="(item,index) in imgUrls" :key="index">
 							<swiper-item>
-								<navigator :url='item.url'
-									class='slide-navigator acea-row row-between-wrapper'
+								<navigator :url='item.url' class='slide-navigator acea-row row-between-wrapper'
 									hover-class='none'>
-									<image :src="item.pic"
-										class="slide-image"
-										lazy-load></image>
+									<image :src="item.pic" class="slide-image" lazy-load></image>
 								</navigator>
 							</swiper-item>
 						</block>
 					</swiper>
 				</view>
 				<!-- 新闻简报 -->
-				<!-- 	<view class='notice acea-row row-middle row-between' v-if="roll.length">
+				<view class='notice acea-row row-middle row-between' v-if="roll.length">
 					<view class="pic">
 						<image src="/static/images/xinjian.png"></image>
 					</view>
@@ -81,26 +64,18 @@
 						</swiper>
 					</view>
 					<view class="iconfont icon-xiangyou"></view>
-				</view> -->
+				</view>
 				<!-- menu -->
-				<view class='nav acea-row'
-					v-if="menus.length">
-					<block v-for="(item,index) in menus"
-						:key="index">
-						<navigator class='item'
-							v-if="item.show == '1'"
-							:url='item.url'
-							open-type='switchTab'
+				<view class='nav acea-row' v-if="menus.length">
+					<block v-for="(item,index) in menus" :key="index">
+						<navigator class='item' v-if="item.show == '1'" :url='item.url' open-type='switchTab'
 							hover-class='none'>
 							<view class='pictrue'>
 								<image :src='item.pic'></image>
 							</view>
 							<view class="menu-txt">{{item.name}}</view>
 						</navigator>
-						<navigator class='item'
-							v-else
-							:url='item.url'
-							hover-class='none'>
+						<navigator class='item' v-else :url='item.url' hover-class='none'>
 							<view class='pictrue'>
 								<image :src='item.pic'></image>
 							</view>
@@ -109,108 +84,74 @@
 					</block>
 				</view>
 				<!-- 优惠券 -->
-				<!-- <view class="couponIndex"
-					v-if="couponList.length>0">
-					<view class="acea-row"
-						style="height: 100%;">
+				<view class="couponIndex" v-if="couponList.length>0">
+					<view class="acea-row" style="height: 100%;">
 						<view class="titBox">
 							<view class="tit1">领取优惠券</view>
 							<view class="tit2">福利大礼包，省了又省</view>
-							<navigator class='item'
-								url='/pages/users/user_get_coupon/index'
-								hover-class='none'>
+							<navigator class='item' url='/pages/users/user_get_coupon/index' hover-class='none'>
 								<view class="tit3">查看全部 <text class="iconfont icon-xiangyou"></text></view>
 							</navigator>
 						</view>
 						<view class="listBox acea-row">
-							<view class="list"
-								:class='item.isUse ? "listHui" : "listActive" '
-								v-for="(item, index) in couponList.slice(0,2)"
-								:key="index">
-								<view class="tit line1"
-									:class='item.isUse ? "pricehui" : "titActive" '>{{item.name}}</view>
-								<view class="price"
-									:class='item.isUse ? "pricehui" : "icon-color" '>
-									{{item.money?Number(item.money):''}}<text class="yuan">元</text>
-								</view>
-								<view class="ling"
-									v-if="!item.isUse"
-									:class='item.isUse ? "pricehui" : "icon-color" '
-									@click="getCoupon(item.id,index)">领取</view>
-								<view class="ling"
-									v-else
-									:class='item.isUse ? "pricehui fonthui" : "icon-color" '>已领取</view>
+							<view class="list" :class='item.isUse ? "listHui" : "listActive" ' v-for="(item, index) in couponList.slice(0,2)" :key="index">
+								<view class="tit line1" :class='item.isUse ? "pricehui" : "titActive" '>{{item.name}}</view>
+								<view class="price" :class='item.isUse ? "pricehui" : "icon-color" '>{{item.money?Number(item.money):''}}<text class="yuan">元</text></view>
+								<view class="ling" v-if="!item.isUse" :class='item.isUse ? "pricehui" : "icon-color" '  @click="getCoupon(item.id,index)">领取</view>
+								<view class="ling" v-else :class='item.isUse ? "pricehui fonthui" : "icon-color" '>已领取</view>
 								<view class="priceM">满{{item.minPrice?Number(item.minPrice):''}}元可用</view>
 							</view>
 						</view>
+
 					</view>
-				</view> -->
+				</view>
 				<!-- 活动-->
-				<!-- <a_seckill></a_seckill>
+				<a_seckill></a_seckill>
 				<b_combination></b_combination>
-				<c_bargain></c_bargain> -->
+				<c_bargain></c_bargain>
+
 				<!-- 首页推荐 -->
 				<!-- :class="iSshowH?'on':''" -->
-				<!-- <view class="sticky-box"
-					:style="'top:'+(marTop)+'px;'">
-					<scroll-view class="scroll-view_H"
-						style="width: 100%;"
-						scroll-x="true"
-						scroll-with-animation
-						:scroll-left="tabsScrollLeft"
-						@scroll="scroll">
-						<view class="tab nav-bd"
-							id="tab_list">
-							<view id="tab_item"
-								:class="{ 'active': listActive == index}"
-								class="item"
-								v-for="(item, index) in explosiveMoney"
-								:key="index"
-								@click="ProductNavTab(item,index)">
+				<view class="sticky-box" :style="'top:'+(marTop)+'px;'">
+					<scroll-view class="scroll-view_H" style="width: 100%;" scroll-x="true" scroll-with-animation
+						:scroll-left="tabsScrollLeft" @scroll="scroll">
+						<view class="tab nav-bd" id="tab_list">
+							<view id="tab_item" :class="{ 'active': listActive == index}" class="item"
+								v-for="(item, index) in explosiveMoney" :key="index" @click="ProductNavTab(item,index)">
 								<view class="txt">{{item.name}}</view>
 								<view class="label">{{item.info}}</view>
 							</view>
 						</view>
 					</scroll-view>
-				</view> -->
+				</view>
+
 				<!-- 首发新品 -->
-				<view class="index-product-wrapper"
-					:class="iSshowH?'on':''">
-					<view class="list-box animated"
-						:class='tempArr.length > 0?"fadeIn on":""'>
-						<view class="item"
-							v-for="(item,index) in tempArr"
-							:key="index"
-							@click="goDetail(item)">
+				<view class="index-product-wrapper" :class="iSshowH?'on':''">
+					<view class="list-box animated" :class='tempArr.length > 0?"fadeIn on":""'>
+						<view class="item" v-for="(item,index) in tempArr" :key="index" @click="goDetail(item)">
 							<view class="pictrue">
-								<!-- 				<span class="pictrue_log pictrue_log_class"
+								<span class="pictrue_log pictrue_log_class"
 									v-if="item.activityH5 && item.activityH5.type === '1'">秒杀</span>
 								<span class="pictrue_log pictrue_log_class"
 									v-if="item.activityH5 && item.activityH5.type === '2'">砍价</span>
 								<span class="pictrue_log pictrue_log_class"
-									v-if="item.activityH5 && item.activityH5.type === '3'">拼团</span> -->
-								<image :src="item.image"
-									mode=""></image>
+									v-if="item.activityH5 && item.activityH5.type === '3'">拼团</span>
+								<image :src="item.image" mode=""></image>
 							</view>
 							<view class="text-info">
-								<view class="title line2">{{item.nickName}} • {{item.age}}岁</view>
-								
-								<!-- <view class="old-price"><text>¥{{item.otPrice}}</text></view>
+								<view class="title line1">{{item.storeName}}</view>
+								<view class="old-price"><text>¥{{item.otPrice}}</text></view>
 								<view class="price">
 									<text>￥</text>{{item.price}}
-									<view class="txt"
-										v-if="item.checkCoupon">券</view>
-								</view> -->
+									<view class="txt" v-if="item.checkCoupon">券</view>
+								</view>
 							</view>
 						</view>
 					</view>
-					<view class='loadingicon acea-row row-center-wrapper'
-						v-if="goodScroll">
-						<text class='loading iconfont icon-jiazai'
-							:hidden='loading==false'></text>
+					<view class='loadingicon acea-row row-center-wrapper' v-if="goodScroll">
+						<text class='loading iconfont icon-jiazai' :hidden='loading==false'></text>
 					</view>
-					<view class="mores-txt flex"
-						v-if="!goodScroll">
+					<view class="mores-txt flex" v-if="!goodScroll">
 						<text>我是有底线的</text>
 					</view>
 				</view>
@@ -218,6 +159,7 @@
 		</view>
 	</view>
 </template>
+
 <script>
 	import Auth from '@/libs/wechat';
 	import Cache from '../../utils/cache';
@@ -316,48 +258,9 @@
 				followHid: true,
 				followCode: false,
 				logoUrl: "",
-				imgUrls: [{
-					"name": "1",
-					"pic": "https://ylhl.qishan.xin/up/p/banner/2022/06/bn_165496494362x_b.png",
-					"id": 1234,
-					"url": "/pages/news_details/index?id=11"
-				}, {
-					"name": "2",
-					"pic": "https://ylhl.qishan.xin/up/p/banner/2022/04/bn_16511594009mi_b.png",
-					"id": 1235,
-					"url": "/pages/users/user_spread_user/index"
-				}, {
-					"name": "3",
-					"pic": "https://ylhl.qishan.xin/up/p/banner/2022/08/bn_1661674620n3s_b.jpg",
-					"id": 1235,
-					"url": "/pages/users/user_spread_user/index"
-				}],
+				imgUrls: [],
 				itemNew: [],
-				menus: [{
-					"name": "开通会员",
-					"show": "1",
-					"pic": "http://192.168.110.132:8083/crmebimage/public/maintain/2021/12/25/21c84909461c434a8ff39d467ba8d648prefpnpq15.png",
-					"id": 1233,
-					"url": "/pages/users/user_get_coupon/index"
-				}, {
-					"name": "拼桌活动",
-					"show": "2",
-					"pic": "http://192.168.110.132:8083/crmebimage/public/maintain/2021/12/25/9ac69cbe9da4459db264b1902ff6f693spomyy6lkw.png",
-					"id": 1228,
-					"url": "/pages/activity/goods_combination/index"
-				}, {
-					"name": "求婚表白",
-					"show": "3",
-					"pic": "http://192.168.110.132:8083/crmebimage/public/maintain/2021/12/25/6ba5bf3b13c446cca8b703bf155ccc9362b0gvz1rc.png",
-					"id": 1226,
-					"url": "/pages/users/user_sgin/index"
-				}, {
-					"name": "商家入驻",
-					"show": "4",
-					"pic": "http://192.168.110.132:8083/crmebimage/public/maintain/2021/12/25/418c7649b2b646f4a13dd6f335ae927426354rq62r.png",
-					"id": 1224,
-					"url": "/pages/goods_cate/goods_cate"
-				}],
+				menus: [],
 				bastInfo: '',
 				fastInfo: '',
 				fastList: [],
@@ -406,27 +309,7 @@
 					page: 1,
 					limit: 10,
 				},
-				tempArr: [{
-					"id": 6,
-					"image": "https://ylhl.qishan.xin/up/p/m/2022/12/107674_m_1670210192i50_m.jpg",
-					"nickName": "杨颖",
-					"age": "18"
-				}, {
-					"id": 5,
-					"image": "https://ylhl.qishan.xin/up/p/m/2022/12/107673_m_1670209583kzl_m.jpg",
-					"nickName": "钟雅群",
-					"age": "18"
-				}, {
-					"id": 4,
-					"image": "https://ylhl.qishan.xin/up/p/m/2022/11/107657_m_1669603575904_m.jpg",
-					"nickName": "钟琴",
-					"age": "18"
-				}, {
-					"id": 3,
-					"image": "https://ylhl.qishan.xin/up/p/m/2022/11/107650_m_1669597017lhu_m.png",
-					"nickName": "林路",
-					"age": "18"
-				}], //精品推荐临时数组
+				tempArr: [], //精品推荐临时数组
 				roll: [], // 新闻简报
 				site_name: '', //首页title
 				iSshowH: false,
@@ -439,6 +322,7 @@
 				lineColor: 'red',
 				lineStyle: {}, // 下划线位置--动态甲酸
 				listActive: 0, // 当前选中项
+
 				duration: 0.2 // 下划线动画时长
 			}
 		},
@@ -594,8 +478,8 @@
 					})
 					that.$set(that, "logoUrl", res.data.logoUrl);
 					that.$set(that, "site_name", '首页');
-					// that.$set(that, "imgUrls", res.data.banner);
-					// that.$set(that, "menus", res.data.menus);
+					that.$set(that, "imgUrls", res.data.banner);
+					that.$set(that, "menus", res.data.menus);
 					that.$set(that, "roll", res.data.roll ? res.data.roll : []);
 					// #ifdef H5
 					that.$store.commit("SET_CHATURL", res.data.yzfUrl);
@@ -609,6 +493,7 @@
 					// #ifdef H5
 					// that.subscribe = res.data.subscribe;
 					// #endif
+
 				})
 			},
 			getcouponList() {
@@ -678,14 +563,16 @@
 				this.isShowAuth = e
 			},
 			// 授权回调
-			onLoadFun() {},
+			onLoadFun() {
+
+			},
 			// 首发新品切换
 			ProductNavTab(item, index) {
 				this.listActive = index
 				this.goodType = item.type
 				this.listActive = index
 				this.ProductNavindex = index
-				// this.tempArr = []
+				this.tempArr = []
 				this.params.page = 1
 				this.goodScroll = true
 				let onloadH = true
@@ -724,9 +611,9 @@
 				}) => {
 					this.iSshowH = false
 					this.loading = false
-					// this.goodScroll = data.list.length >= this.params.limit
-					// this.params.page++
-					// this.tempArr = this.tempArr.concat(data.list)
+					this.goodScroll = data.list.length >= this.params.limit
+					this.params.page++
+					this.tempArr = this.tempArr.concat(data.list)
 				})
 			},
 			/**
@@ -735,8 +622,12 @@
 			get_host_product: function() {
 				let that = this;
 				that.loading = true;
+			
 				if (that.hotScroll) return
-				getProductHot(that.hotPage, that.hotLimit, ).then(res => {
+				getProductHot(
+					that.hotPage,
+					that.hotLimit,
+				).then(res => {
 					that.hotPage++
 					that.hotScroll = res.data.list.length < that.hotLimit
 					that.hostProduct = that.hostProduct.concat(res.data.list)
@@ -792,10 +683,11 @@
 		/* #ifdef H5 */
 		background-color: #fff;
 		/* #endif */
+
 	}
 </style>
 <style lang="scss">
-	.notice {
+	.notice{
 		width: 100%;
 		height: 70rpx;
 		border-radius: 10rpx;
@@ -803,27 +695,22 @@
 		margin-bottom: 25rpx;
 		line-height: 70rpx;
 		padding: 0 14rpx;
-
 		.line {
 			color: #CCCCCC;
 		}
-
-		.pic {
+		.pic{
 			width: 130rpx;
 			height: 36rpx;
-
-			image {
+			image{
 				width: 100%;
 				height: 100%;
 				display: block !important;
 			}
 		}
-
 		.swipers {
 			height: 100%;
 			width: 444rpx;
 			overflow: hidden;
-
 			swiper {
 				height: 100%;
 				width: 100%;
@@ -832,13 +719,11 @@
 				color: #333333;
 			}
 		}
-
 		.iconfont {
 			color: #999999;
 			font-size: 20rpx;
-		}
+		} 
 	}
-
 	.couponIndex {
 		width: auto;
 		height: 238rpx;
@@ -846,7 +731,7 @@
 		background-size: 100% 100%;
 		padding-left: 42rpx;
 		margin-bottom: 30rpx;
-
+		
 		.titBox {
 			padding: 47rpx 0;
 			text-align: center;
@@ -861,13 +746,12 @@
 			.tit2 {
 				color: #FFEBD2;
 				font-size: 22rpx;
-				margin: 10rpx 0 26rpx 0;
+				margin:10rpx 0 26rpx 0;
 			}
 
 			.tit3 {
 				color: #FFDAAF;
 				font-size: 24rpx;
-
 				.iconfont {
 					font-size: 20rpx;
 				}
@@ -912,11 +796,9 @@
 				.pricehui {
 					color: #B2B2B2;
 				}
-
-				.fonthui {
+                .fonthui{
 					background-color: #F5F5F5 !important;
 				}
-
 				.yuan {
 					font-size: 24rpx;
 				}
@@ -950,6 +832,7 @@
 		/* #ifdef H5*/
 		top: var(--window-top);
 		/* #endif */
+		
 		z-index: 99;
 		flex-direction: row;
 		margin: 0px;
@@ -1010,6 +893,7 @@
 		white-space: nowrap;
 		width: 100%;
 	}
+
 
 	.privacy-wrapper {
 		z-index: 999;
@@ -1084,6 +968,7 @@
 
 			.serch-wrapper {
 				align-items: center;
+
 
 				.logo {
 					width: 118rpx;
@@ -1166,6 +1051,7 @@
 		}
 
 		/* #endif */
+
 		.page_content {
 			background-color: #f5f5f5;
 			/* #ifdef H5 */
@@ -1208,7 +1094,7 @@
 					flex-direction: column;
 					align-items: center;
 					justify-content: center;
-					width: 25%;
+					width: 20%;
 					margin-top: 30rpx;
 
 					image {
@@ -1217,6 +1103,7 @@
 					}
 				}
 			}
+
 
 			.nav-bd {
 				display: flex;
@@ -1282,7 +1169,7 @@
 
 						image {
 							width: 100%;
-							height: 430rpx;
+							height: 330rpx;
 						}
 
 						.text-info {
@@ -1450,6 +1337,7 @@
 		left: 0;
 		top: 0;
 		background: linear-gradient(90deg, red 50%, #ff5400 100%);
+
 	}
 
 	.mores-txt {
