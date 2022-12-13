@@ -336,25 +336,25 @@
 				menus: [{
 					"name": "开通会员",
 					"show": "1",
-					"pic": "http://192.168.110.132:8083/crmebimage/public/maintain/2021/12/25/21c84909461c434a8ff39d467ba8d648prefpnpq15.png",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/21c84909461c434a8ff39d467ba8d648prefpnpq15.png",
 					"id": 1233,
 					"url": "/pages/users/user_get_coupon/index"
 				}, {
 					"name": "拼桌活动",
 					"show": "2",
-					"pic": "http://192.168.110.132:8083/crmebimage/public/maintain/2021/12/25/9ac69cbe9da4459db264b1902ff6f693spomyy6lkw.png",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/9ac69cbe9da4459db264b1902ff6f693spomyy6lkw.png",
 					"id": 1228,
 					"url": "/pages/activity/goods_combination/index"
 				}, {
 					"name": "求婚表白",
 					"show": "3",
-					"pic": "http://192.168.110.132:8083/crmebimage/public/maintain/2021/12/25/6ba5bf3b13c446cca8b703bf155ccc9362b0gvz1rc.png",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/6ba5bf3b13c446cca8b703bf155ccc9362b0gvz1rc.png",
 					"id": 1226,
 					"url": "/pages/users/user_sgin/index"
 				}, {
 					"name": "商家入驻",
 					"show": "4",
-					"pic": "http://192.168.110.132:8083/crmebimage/public/maintain/2021/12/25/418c7649b2b646f4a13dd6f335ae927426354rq62r.png",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/418c7649b2b646f4a13dd6f335ae927426354rq62r.png",
 					"id": 1224,
 					"url": "/pages/goods_cate/goods_cate"
 				}],
