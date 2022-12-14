@@ -484,6 +484,8 @@
 			onLoadFun() {},
 			// 首发新品切换
 			ProductNavTab(item, index) {
+				console.log("ProductNavTab-item:",item,);
+				console.log("ProductNavTab-index:",index,);
 				this.listActive = index
 				this.goodType = item.type
 				this.listActive = index
@@ -496,19 +498,27 @@
 			},
 			setValue: function(event) {
 				this.$set(this, 'searchValue', event.detail.value);
+				console.log("searchValue", event.detail.value);
 			},
 			searchBut: function() {
 				let that = this;
 				that.focus = false;
+				console.log("that.searchValue.length:", that.searchValue.length);
 				if (that.searchValue.length > 0) {
-					that.params.searchValue = that.searchValue
-					that.params.page = 1
+					that.listActive = 0
+					that.goodType = 1
+					that.tempArr = []
+					that.params.searchValue = that.searchValue;
+					that.params.page = 1;
 					that.loadend = false;
 					uni.showLoading({
 						title: '正在搜索中'
 					});
+					console.log("that.params:", that.params);
+					that.goodScroll = true
 					let onloadH = true
-					that.getGroomList(onloadH)
+					that.getGroomList(onloadH);
+					console.log("onloadH:", onloadH);
 					uni.hideLoading();
 				} else {
 					return this.$util.Tips({
@@ -541,8 +551,10 @@
 			},
 			// 精品推荐
 			getGroomList(onloadH) {
+				console.log("进入接口请求环节");
 				this.loading = true
 				let type = this.goodType;
+				console.log("this.goodScroll",this.goodScroll);
 				if (!this.goodScroll) return
 				if (onloadH) {
 					this.iSshowH = true
