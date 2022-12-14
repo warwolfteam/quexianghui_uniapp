@@ -439,6 +439,15 @@
 				"navigationBarTitleText": "精品推荐"
 			}
 		}]
+	}, {
+		"root": "pages/together",
+		"name": "allTogether",
+		"pages": [{
+			"path": "put_it_together/put_it_together",
+			"style": {
+				"navigationBarTitleText": "拼桌商城"
+			}
+		}]
 	}],
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
