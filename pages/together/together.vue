@@ -45,6 +45,26 @@
 								<view class="label">{{item.info}}</view>
 							</view>
 						</view>
+						<view class="fabuhuodong">
+							<view class="fabu">
+								<view class="icon">
+									<u-icon :name="fabuLogo"
+										color="#000000"
+										size="48"></u-icon>
+								</view>
+								<view class="tex"> 发布 <view class="miaoshu">线下社交活动</view>
+								</view>
+							</view>
+							<view class="huodong">
+								<view class="icon">
+									<u-icon :name="huodongLogo"
+										color="#000000"
+										size="48"></u-icon>
+								</view>
+								<view class="tex"> 我参与的活动 <view class="miaoshu"></view>
+								</view>
+							</view>
+						</view>
 					</scroll-view>
 				</view>
 				<!-- 首发新品 -->
@@ -208,6 +228,8 @@
 				hotPage: 1,
 				hotLimit: 10,
 				hotScroll: false,
+				fabuLogo: "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2022/12/14/2ffd33566ae94e69a15b0e8c1560083ayebdw75tlm.png",
+				huodongLogo: "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2022/12/14/2ffd33566ae94e69a15b0e8c1560083ayebdw75tlm.png",
 				explosiveMoney: [{
 					"id": 1247,
 					"info": "全部",
@@ -288,7 +310,7 @@
 			// #ifdef MP
 			// 获取小程序头部高度
 			this.navH = app.globalData.navHeight;
-			// let info = uni.createSelectorQuery().select(".mp-header");
+			let info = uni.createSelectorQuery().select(".mp-header");
 			// info.boundingClientRect(function(data) {
 			// 	console.log("boundingClientRect:",info);
 			// 	self.marTop = data.height
@@ -297,6 +319,7 @@
 			// #endif
 			// #ifndef MP
 			this.navH = 0;
+			self.marTop = 42;
 			// #endif
 			this.isLogin && silenceBindingSpread();
 			// Promise.all([this.getAllCategory(), this.getIndexConfig()
@@ -484,8 +507,10 @@
 			onLoadFun() {},
 			// 首发新品切换
 			ProductNavTab(item, index) {
-				console.log("ProductNavTab-item:",item,);
-				console.log("ProductNavTab-index:",index,);
+				console.log("ProductNavTab-item:", item, );
+				console.log("ProductNavTab-index:", index, );
+				this.searchValue = ""
+				this.params.searchValue = ""
 				this.listActive = index
 				this.goodType = item.type
 				this.listActive = index
@@ -554,7 +579,7 @@
 				console.log("进入接口请求环节");
 				this.loading = true
 				let type = this.goodType;
-				console.log("this.goodScroll",this.goodScroll);
+				console.log("this.goodScroll", this.goodScroll);
 				if (!this.goodScroll) return
 				if (onloadH) {
 					this.iSshowH = true
@@ -845,70 +870,70 @@
 		background: #2FC6CD;
 	}
 
+	.fabuhuodong {
+		margin-top: 20rpx;
+		width: 100%;
+		height: 120rpx;
+		padding: 10rpx;
+
+		.fabu {
+			margin-left: 4%;
+			border-radius: 11rpx;
+			background-color: #ffffff;
+			float: left;
+			padding: 10rpx;
+			width: 45%;
+			display: flex;
+			height: 100rpx;
+
+			.icon {
+				padding-left: 20rpx;
+				line-height: 90rpx;
+				align-items: center;
+			}
+
+			.tex {
+				padding-left: 20rpx;
+				line-height: 65rpx;
+				align-items: center;
+				font-size: 25rpx;
+
+				.miaoshu {
+					margin-top: -35rpx;
+					font-size: 15rpx;
+				}
+			}
+		}
+
+		.huodong {
+			margin-right: 4%;
+			border-radius: 11rpx;
+			background-color: #ffffff;
+			float: right;
+			padding: 10rpx;
+			width: 45%;
+			display: flex;
+			height: 100rpx;
+
+			.icon {
+				padding-left: 20rpx;
+				line-height: 90rpx;
+				align-items: center;
+			}
+
+			.tex {
+				padding-left: 20rpx;
+				line-height: 65rpx;
+				align-items: center;
+				font-size: 25rpx;
+			}
+		}
+	}
+
 	.scroll-view_H {
 		/* 文本不会换行，文本会在在同一行上继续，直到遇到 <br> 标签为止。 */
 		white-space: nowrap;
 		width: 100%;
-	}
-
-	.privacy-wrapper {
-		z-index: 999;
-		position: fixed;
-		left: 0;
-		top: 0;
-		width: 100%;
-		height: 100%;
-		background: #7F7F7F;
-
-		.privacy-box {
-			position: absolute;
-			left: 50%;
-			top: 50%;
-			transform: translate(-50%, -50%);
-			width: 560rpx;
-			padding: 50rpx 45rpx 0;
-			background: #fff;
-			border-radius: 20rpx;
-
-			.title {
-				text-align: center;
-				font-size: 32rpx;
-				text-align: center;
-				color: #333;
-				font-weight: 700;
-			}
-
-			.content {
-				margin-top: 20rpx;
-				line-height: 1.5;
-				font-size: 26rpx;
-				color: #666;
-				text-indent: 54rpx;
-
-				i {
-					font-style: normal;
-					color: $theme-color;
-				}
-			}
-
-			.btn-box {
-				margin-top: 40rpx;
-				text-align: center;
-				font-size: 30rpx;
-
-				.btn-item {
-					height: 82rpx;
-					line-height: 82rpx;
-					background: linear-gradient(90deg, #F67A38 0%, #F11B09 100%);
-					color: #fff;
-					border-radius: 41rpx;
-				}
-
-				.btn {
-					padding: 30rpx 0;
-				}
-			}
-		}
 	}
 
 	.page-index {
@@ -1222,104 +1247,6 @@
 				}
 			}
 		}
-	}
-
-	.productList {
-		/* #ifdef H5 */
-		padding-bottom: 140rpx;
-		/* #endif */
-	}
-
-	.productList .list {
-		padding: 0 20rpx;
-	}
-
-	.productList .list.on {
-		background-color: #fff;
-		border-top: 1px solid #f6f6f6;
-	}
-
-	.productList .list .item {
-		width: 345rpx;
-		margin-top: 20rpx;
-		background-color: #fff;
-		border-radius: 10rpx;
-	}
-
-	.productList .list .item.on {
-		width: 100%;
-		display: flex;
-		border-bottom: 1rpx solid #f6f6f6;
-		padding: 30rpx 0;
-		margin: 0;
-	}
-
-	.productList .list .item .pictrue {
-		position: relative;
-		width: 100%;
-		height: 345rpx;
-	}
-
-	.productList .list .item .pictrue.on {
-		width: 180rpx;
-		height: 180rpx;
-	}
-
-	.productList .list .item .pictrue image {
-		width: 100%;
-		height: 100%;
-		border-radius: 20rpx 20rpx 0 0;
-	}
-
-	.productList .list .item .pictrue image.on {
-		border-radius: 6rpx;
-	}
-
-	.productList .list .item .text {
-		padding: 20rpx 17rpx 26rpx 17rpx;
-		font-size: 30rpx;
-		color: #222;
-	}
-
-	.productList .list .item .text.on {
-		width: 508rpx;
-		padding: 0 0 0 22rpx;
-	}
-
-	.productList .list .item .text .money {
-		font-size: 26rpx;
-		font-weight: bold;
-		margin-top: 8rpx;
-	}
-
-	.productList .list .item .text .money.on {
-		margin-top: 50rpx;
-	}
-
-	.productList .list .item .text .money .num {
-		font-size: 34rpx;
-	}
-
-	.productList .list .item .text .vip {
-		font-size: 22rpx;
-		color: #aaa;
-		margin-top: 7rpx;
-	}
-
-	.productList .list .item .text .vip.on {
-		margin-top: 12rpx;
-	}
-
-	.productList .list .item .text .vip .vip-money {
-		font-size: 24rpx;
-		color: #282828;
-		font-weight: bold;
-	}
-
-	.productList .list .item .text .vip .vip-money image {
-		width: 46rpx;
-		height: 21rpx;
-		margin-left: 4rpx;
 	}
 
 	.pictrue {
