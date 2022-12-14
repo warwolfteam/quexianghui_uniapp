@@ -61,7 +61,13 @@
 									mode=""></image>
 							</view>
 							<view class="text-info">
-								<view class="title line2">{{item.nickName}} • {{item.age}}岁</view>
+								<view class="title line1">{{item.storeName}}</view>
+								<!-- <view class="old-price"><text>¥{{item.otPrice}}</text></view> -->
+								<view class="price">
+									<text>￥</text>{{item.price}}
+									<!-- <view class="txt"
+										v-if="item.checkCoupon">券</view> -->
+								</view>
 							</view>
 						</view>
 					</view>
@@ -232,27 +238,7 @@
 					page: 1,
 					limit: 10,
 				},
-				tempArr: [{
-					"id": 6,
-					"image": "https://ylhl.qishan.xin/up/p/m/2022/12/107674_m_1670210192i50_m.jpg",
-					"nickName": "杨颖",
-					"age": "18"
-				}, {
-					"id": 5,
-					"image": "https://ylhl.qishan.xin/up/p/m/2022/12/107673_m_1670209583kzl_m.jpg",
-					"nickName": "钟雅群",
-					"age": "18"
-				}, {
-					"id": 4,
-					"image": "https://ylhl.qishan.xin/up/p/m/2022/11/107657_m_1669603575904_m.jpg",
-					"nickName": "钟琴",
-					"age": "18"
-				}, {
-					"id": 3,
-					"image": "https://ylhl.qishan.xin/up/p/m/2022/11/107650_m_1669597017lhu_m.png",
-					"nickName": "林路",
-					"age": "18"
-				}], //精品推荐临时数组
+				tempArr: [], //精品推荐临时数组
 				roll: [], // 新闻简报
 				iSshowH: false,
 				configApi: {}, //分享类容配置
