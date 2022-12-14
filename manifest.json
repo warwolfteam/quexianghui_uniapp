@@ -1,6 +1,6 @@
 {
     "name" : "鹊相会",
-    "appid" : "__UNI__A1BE28B",
+    "appid" : "__UNI__3A92D21",
     "description" : "鹊相会前端项目",
     "versionName" : "1.0.0",
     "versionCode" : 1,
@@ -48,10 +48,13 @@
             },
             /* ios打包配置 */
             "ios" : {
-                "idfa" : false
+                "idfa" : false,
+                "dSYMs" : false
             },
             /* SDK配置 */
-            "sdkConfigs" : {},
+            "sdkConfigs" : {
+                "ad" : {}
+            },
             "icons" : {}
         }
     },

@@ -5,7 +5,8 @@ import Cache from './utils/cache'
 import util from 'utils/util'
 import configs from './config/app.js'
 import * as Order from './libs/order';
-
+import uView from "uview-ui";
+Vue.use(uView);
 Vue.prototype.$util = util;
 Vue.prototype.$config = configs;
 Vue.prototype.$Cache = Cache;
