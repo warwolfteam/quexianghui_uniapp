@@ -45,26 +45,6 @@
 								<view class="label">{{item.info}}</view>
 							</view>
 						</view>
-						<view class="fabuhuodong">
-							<view class="fabu">
-								<view class="icon">
-									<u-icon :name="fabuLogo"
-										color="#000000"
-										size="48"></u-icon>
-								</view>
-								<view class="tex"> 发布 <view class="miaoshu">线下社交活动</view>
-								</view>
-							</view>
-							<view class="huodong">
-								<view class="icon">
-									<u-icon :name="huodongLogo"
-										color="#000000"
-										size="48"></u-icon>
-								</view>
-								<view class="tex"> 我参与的活动 <view class="miaoshu"></view>
-								</view>
-							</view>
-						</view>
 					</scroll-view>
 				</view>
 				<!-- 首发新品 -->
@@ -228,8 +208,6 @@
 				hotPage: 1,
 				hotLimit: 10,
 				hotScroll: false,
-				fabuLogo: "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2022/12/14/2ffd33566ae94e69a15b0e8c1560083ayebdw75tlm.png",
-				huodongLogo: "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2022/12/14/2ffd33566ae94e69a15b0e8c1560083ayebdw75tlm.png",
 				explosiveMoney: [{
 					"id": 1247,
 					"info": "全部",
@@ -868,66 +846,6 @@
 		border-radius: 3rpx;
 		position: relative;
 		background: #2FC6CD;
-	}
-
-	.fabuhuodong {
-		margin-top: 20rpx;
-		width: 100%;
-		height: 120rpx;
-		padding: 10rpx;
-
-		.fabu {
-			margin-left: 4%;
-			border-radius: 11rpx;
-			background-color: #ffffff;
-			float: left;
-			padding: 10rpx;
-			width: 45%;
-			display: flex;
-			height: 100rpx;
-
-			.icon {
-				padding-left: 20rpx;
-				line-height: 90rpx;
-				align-items: center;
-			}
-
-			.tex {
-				padding-left: 20rpx;
-				line-height: 65rpx;
-				align-items: center;
-				font-size: 25rpx;
-
-				.miaoshu {
-					margin-top: -35rpx;
-					font-size: 15rpx;
-				}
-			}
-		}
-
-		.huodong {
-			margin-right: 4%;
-			border-radius: 11rpx;
-			background-color: #ffffff;
-			float: right;
-			padding: 10rpx;
-			width: 45%;
-			display: flex;
-			height: 100rpx;
-
-			.icon {
-				padding-left: 20rpx;
-				line-height: 90rpx;
-				align-items: center;
-			}
-
-			.tex {
-				padding-left: 20rpx;
-				line-height: 65rpx;
-				align-items: center;
-				font-size: 25rpx;
-			}
-		}
 	}
 
 	.scroll-view_H {
