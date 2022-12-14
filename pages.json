@@ -109,7 +109,7 @@
 			"style": {}
 		}
 	    ,{
-            "path" : "pages/together/together",
+            "path" : "pages/index/together",
             "style" :                                                                                    
             {
                 "navigationBarTitleText": "拼桌",
@@ -466,7 +466,7 @@
 			"selectedIconPath": "static/images/1-002.png",
 			"text": "首页"
 		}, {
-			"pagePath": "pages/together/together",
+			"pagePath": "pages/index/together",
 			"iconPath": "static/images/2-001.png",
 			"selectedIconPath": "static/images/2-002.png",
 			"text": "拼桌"

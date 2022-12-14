@@ -45,7 +45,8 @@
 								<view class="label">{{item.info}}</view>
 							</view>
 						</view>
-						<view class="fabuhuodong">
+						<view class="fabuhuodong"
+							@click="goFabu">
 							<view class="fabu">
 								<view class="icon">
 									<u-icon :name="fabuLogo"
@@ -55,7 +56,8 @@
 								<view class="tex"> 发布 <view class="miaoshu">线下社交活动</view>
 								</view>
 							</view>
-							<view class="huodong">
+							<view class="huodong"
+								@click="canyuhuodong">
 								<view class="icon">
 									<u-icon :name="huodongLogo"
 										color="#000000"
@@ -81,12 +83,16 @@
 									mode=""></image>
 							</view>
 							<view class="text-info">
-								<view class="title line1">{{item.storeName}}</view>
-								<!-- <view class="old-price"><text>¥{{item.otPrice}}</text></view> -->
-								<view class="price">
-									<text>￥</text>{{item.price}}
-									<!-- <view class="txt"
-										v-if="item.checkCoupon">券</view> -->
+								<view class="title line1"> 妙儿 </view>
+								<view class="title line1"> 项目名称：{{item.storeName}} </view>
+								<view class="title line1"> 时间：2022.12.12 </view>
+								<view class="title line1"> 地点：万象城7楼 </view>
+								<view class="title line2"> 备注：跟所有的烦恼说拜拜，跟所有的快乐say hihi </view>
+								<view class="botton">
+									<u-button type="error"
+										size="mini"
+										:plain="true"
+										shape="circle">立即拼桌</u-button>
 								</view>
 							</view>
 						</view>
@@ -520,6 +526,27 @@
 				this.goodScroll = true
 				let onloadH = true
 				this.getGroomList(onloadH)
+			},
+			canyuhuodong() {
+				console.log("canyuhuodong:");
+				this.searchValue = ""
+				this.params.searchValue = ""
+				this.params.canyuhuodong = 1
+				this.tempArr = []
+				this.params.page = 1
+				this.goodScroll = true
+				let onloadH = true
+				this.getGroomList(onloadH)
+			},
+			// 发布
+			goFabu() {
+				if (!this.isLogin) {
+					toLogin();
+				} else {
+					uni.navigateTo({
+						url: `/pages/together/put_it_together/put_it_together`
+					})
+				}
 			},
 			setValue: function(event) {
 				this.$set(this, 'searchValue', event.detail.value);
@@ -1176,27 +1203,46 @@
 				}
 
 				.list-box {
-					display: flex;
+					// display: flex;
 					flex-wrap: wrap;
 					justify-content: space-between;
 
 					.item {
-						width: 335rpx;
+						width: 100%;
+						height: 300rpx;
 						margin-bottom: 20rpx;
+						padding-top: 20rpx;
 						background-color: #fff;
 						border-radius: 10rpx;
 						overflow: hidden;
+						display: flex;
 
-						image {
-							width: 100%;
-							height: 430rpx;
+						.pictrue {
+							position: relative;
+							line-height: 250rpx;
+							width: 30%;
+
+							image {
+								width: 200rpx;
+								height: 200rpx;
+								border-radius: 100rpx;
+								margin: 30rpx;
+							}
 						}
 
 						.text-info {
+							width: 60%;
+							margin: 30rpx;
 							padding: 10rpx 20rpx 15rpx;
+							font-size: 20rpx;
 
 							.title {
 								color: #222222;
+							}
+
+							.botton {
+								margin-top: 20rpx;
+								float: right;
 							}
 
 							.old-price {
@@ -1247,10 +1293,6 @@
 				}
 			}
 		}
-	}
-
-	.pictrue {
-		position: relative;
 	}
 
 	.fixed {
