@@ -1,136 +1,116 @@
 <template>
-	<view class="new-users copy-data" :style="{height:pageHeight}">
-		<view class="mid" style="flex:1;overflow: hidden;">
-			<scroll-view scroll-y="true" style="height: 100%;">
+	<view class="new-users copy-data"
+		:style="{height:pageHeight}">
+		<view class="mid"
+			style="flex:1;overflow: hidden;">
+			<scroll-view scroll-y="true"
+				style="height: 100%;">
 				<view class="bg"></view>
 				<view class="head pad30">
 					<view class="user-card">
 						<view class="user-info">
-							<image class="avatar" :src='userInfo.avatar' v-if="userInfo.avatar && uid"
+							<image class="avatar"
+								:src='userInfo.avatar'
+								v-if="userInfo.avatar && uid"
 								@click="goEdit()"></image>
-							<image v-else class="avatar" src="/static/images/f.png" mode="" @click="goEdit()"></image>
+							<image v-else
+								class="avatar"
+								src="/static/images/f.png"
+								mode=""
+								@click="goEdit()"></image>
 							<view class="info">
-								<view class="name" v-if="!uid" @tap="openAuto">
-									请点击登录
-								</view>
-								<view class="name" v-if="uid">
+								<view class="name"
+									v-if="!uid"
+									@tap="openAuto"> 请点击登录 </view>
+								<view class="name"
+									v-if="uid">
 									{{userInfo.nickname}}
-									<view class="vip" v-if="userInfo.vip">
-										<image :src="userInfo.vipIcon" alt="">
-											<view style="margin-left: 10rpx;" class="vip-txt">{{userInfo.vipName || ''}}
+									<view class="vip"
+										v-if="userInfo.vip">
+										<image :src="userInfo.vipIcon"
+											alt="">
+											<view style="margin-left: 10rpx;"
+												class="vip-txt">{{userInfo.vipName || ''}}
 											</view>
 									</view>
 								</view>
-								<view class="num" v-if="userInfo.phone && uid" @click="goEdit()">
-									<view class="num-txt">{{userInfo.phone}}</view>
+								<view class="num"
+									v-if="userInfo.phone && uid"
+									@click="goEdit()">
+									<view class="num-txt">UID:{{uid}}</view>
 									<view class="icon">
-										<image src="/static/images/edit.png" mode=""></image>
+										<image src="/static/images/edit.png"
+											mode=""></image>
+										<view class="wenzi"> 修改资料 </view>
 									</view>
 								</view>
-								<view class="phone" v-if="!userInfo.phone && isLogin" @tap="bindPhone">绑定手机号</view>
+								<view class="phone"
+									v-if="!userInfo.phone && isLogin"
+									@tap="bindPhone">绑定手机号</view>
 							</view>
-						</view>
-						<view class="num-wrapper">
-							<view class="num-item" @click="goMenuPage('/pages/users/user_money/index')">
-								<text
-									class="num">{{userInfo.nowMoney && uid ?Number(userInfo.nowMoney).toFixed(2):0}}</text>
-								<view class="txt">余额</view>
-							</view>
-							<view class="num-item" @click="goMenuPage('/pages/users/user_integral/index')">
-								<text class="num">{{userInfo.integral && uid ? userInfo.integral: 0}}</text>
-								<view class="txt">积分</view>
-							</view>
-							<view class="num-item" @click="goMenuPage('/pages/users/user_coupon/index')">
-								<text class="num">{{userInfo.couponCount && uid ? userInfo.couponCount : 0}}</text>
-								<view class="txt">优惠券</view>
-							</view>
-							<view class="num-item" @click="goMenuPage('/pages/users/user_goods_collection/index')">
-								<text class="num">{{userInfo.collectCount && uid ? userInfo.collectCount : 0}}</text>
-								<view class="txt">收藏</view>
-							</view>
-						</view>
-						<!-- <view class="sign" @click="goSignIn">签到</view> -->
-					</view>
-					<view class="order-wrapper">
-						<view class="order-hd flex">
-							<view class="left">订单中心</view>
-							<navigator class="right flex" hover-class="none" url="/pages/users/order_list/index"
-								open-type="navigate">
-								查看全部
-								<text class="iconfont icon-xiangyou"></text>
-							</navigator>
-						</view>
-						<view class="order-bd">
-							<block v-for="(item,index) in orderMenu" :key="index">
-								<navigator class="order-item" hover-class="none" :url="item.url">
-									<view class="pic">
-										<image :src="item.img" mode=""></image>
-										<text class="order-status-num" v-if="item.num > 0">{{ item.num }}</text>
-									</view>
-									<view class="txt">{{item.title}}</view>
-								</navigator>
-							</block>
 						</view>
 					</view>
 				</view>
 				<view class="contenBox">
-					<!-- 轮播 -->
-					<view class="slider-wrapper" v-if="imgUrls.length>0">
-						<swiper indicator-dots="true" :autoplay="autoplay" :circular="circular" :interval="interval"
-							:duration="duration" indicator-color="rgba(255,255,255,0.6)" indicator-active-color="#fff">
-							<block v-for="(item,index) in imgUrls" :key="index">
-								<swiper-item class="borRadius14">
-									<image :src="item.pic" class="slide-image" @click="navito(item.url)"></image>
-								</swiper-item>
-							</block>
-						</swiper>
-					</view>
-
 					<!-- 会员菜单 -->
-					<view class="user-menus" style="margin-top: 20rpx;">
+					<view class="user-menus"
+						style="margin-top: 20rpx;">
 						<view class="menu-title">我的服务</view>
 						<view class="list-box">
-							<block v-for="(item,index) in MyMenus" :key="index">
-								<navigator class="item" :url="item.url" hover-class="none"
+							<block v-for="(item,index) in MyMenus"
+								:key="index">
+								<navigator class="item"
+									:url="item.url"
+									hover-class="none"
 									v-if="!(item.url =='/pages/service/index' || (item.url =='/pages/users/user_spread_user/index' && !userInfo.isPromoter))">
 									<image :src="item.pic"></image>
 									<text>{{item.name}}</text>
 								</navigator>
 							</block>
 							<!-- #ifndef MP -->
-							<view class="item" @click="kefuClick">
+							<view class="item"
+								@click="kefuClick">
 								<image :src="servicePic"></image>
 								<text>联系客服</text>
 							</view>
 							<!-- #endif -->
 							<!-- #ifdef MP -->
-							<button class="item" open-type='contact' hover-class='none'>
+							<button class="item"
+								open-type='contact'
+								hover-class='none'>
 								<image :src="servicePic"></image>
 								<text>联系客服</text>
 							</button>
 							<!-- #endif -->
 						</view>
 					</view>
-					<!-- <image src="/static/images/support.png" alt="" class='support'> -->
 					<view class="uni-p-b-98"></view>
 				</view>
-
 			</scroll-view>
 		</view>
-		<!-- #ifdef MP -->
-		<!-- <authorize @onLoadFun="onLoadFun" :isAuto="isAuto" :isShowAuth="isShowAuth" @authColse="authColse"></authorize> -->
-		<!-- #endif -->
 	</view>
 </template>
 <script>
 	let sysHeight = uni.getSystemInfoSync().statusBarHeight + 'px';
 	import Cache from '@/utils/cache';
-	import {BACK_URL} from '@/config/cache';
-	import {getMenuList} from '@/api/user.js';
-	import {orderData} from '@/api/order.js';
-	import {toLogin} from '@/libs/login.js';
-	import {getCity} from '@/api/api.js';
-	import {mapGetters} from "vuex";
+	import {
+		BACK_URL
+	} from '@/config/cache';
+	import {
+		getMenuList
+	} from '@/api/user.js';
+	import {
+		orderData
+	} from '@/api/order.js';
+	import {
+		toLogin
+	} from '@/libs/login.js';
+	import {
+		getCity
+	} from '@/api/api.js';
+	import {
+		mapGetters
+	} from "vuex";
 	// #ifdef H5
 	import Auth from '@/libs/wechat';
 	// #endif
@@ -147,37 +127,6 @@
 		computed: mapGetters(['isLogin', 'chatUrl', 'userInfo', 'uid']),
 		data() {
 			return {
-				orderMenu: [{
-						img: '/static/images/order1.png',
-						title: '待付款',
-						url: '/pages/users/order_list/index?status=0',
-						num: 0
-					},
-					{
-						img: '/static/images/order2.png',
-						title: '待发货',
-						url: '/pages/users/order_list/index?status=1',
-						num: 0
-					},
-					{
-						img: '/static/images/order3.png',
-						title: '待收货',
-						url: '/pages/users/order_list/index?status=2',
-						num: 0
-					},
-					{
-						img: '/static/images/order4.png',
-						title: '待评价',
-						url: '/pages/users/order_list/index?status=3',
-						num: 0
-					},
-					{
-						img: '/static/images/order5.png',
-						title: '售后/退款',
-						url: '/pages/users/user_return_list/index',
-						num: 0
-					},
-				],
 				imgUrls: [],
 				userMenu: [],
 				autoplay: true,
@@ -187,8 +136,55 @@
 				isAuto: false, //没有授权的不会自动授权
 				isShowAuth: false, //是否隐藏授权
 				orderStatusNum: {},
-				MyMenus: [],
-				wechatUrl: [],
+				MyMenus: [{
+					"wap_url": "/pages/users/user_vip/index",
+					"name": "会员中心",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/dd497d333f4541d7ae41b2c579706370jhp2x39yrg.png",
+					"id": 1238,
+					"url": "/pages/users/user_vip/index"
+				}, {
+					"wap_url": "/pages/activity/bargain/index",
+					"name": "砍价记录",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/5d6617d3440c4d67802fdf064b77b471qzfen9343d.png",
+					"id": 1239,
+					"url": "/pages/activity/bargain/index"
+				}, {
+					"wap_url": "/pages/users/user_spread_user/index",
+					"name": "我的推广",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/197b96e3a4d24728b4069b0c288326352gcds3duga.png",
+					"id": 1240,
+					"url": "/pages/users/user_spread_user/index"
+				}, {
+					"wap_url": "/pages/users/user_money/index",
+					"name": "我的余额",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/0624fe22d770438891ad666ebef9e21e1rhiepyec1.png",
+					"id": 1241,
+					"url": "/pages/users/user_money/index"
+				}, {
+					"wap_url": "/pages/users/user_address_list/index",
+					"name": "地址信息",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/886e04146694474c966d346222fe2897ealwo6qycj.png",
+					"id": 1242,
+					"url": "/pages/users/user_address_list/index"
+				}, {
+					"wap_url": "/pages/users/user_goods_collection/index",
+					"name": "我的收藏",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/3308f2d779874079b0e02ae206cf141bwb23ii2z52.png",
+					"id": 1243,
+					"url": "/pages/users/user_goods_collection/index"
+				}, {
+					"wap_url": "/pages/users/user_coupon/index",
+					"name": "优惠券",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/11113e1876ac427bb3173086a3bd6c5bhyan1ea9pz.png",
+					"id": 1244,
+					"url": "/pages/users/user_coupon/index"
+				}, {
+					"wap_url": "https://yzf.qq.com/xv/web/static/chat/index.html?sign=37ef9b97db2656c32340cde61ce2b56a2176efe72ac7ed421c77607b5c816611ec4775a17c7605b33df1ffe1d22a4ce7464dd07b",
+					"name": "联系客服",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/77ac54ce5f514ebbb89854f927f2a891dzefr2qxmh.png",
+					"id": 1245,
+					"url": "/pages/service/index"
+				}],
 				servicePic: '/static/images/customer.png',
 				sysHeight: sysHeight,
 				// #ifdef MP
@@ -204,10 +200,10 @@
 		},
 		onLoad() {
 			let that = this;
+			console.log("that.userInfo:", that.userInfo);
 			// #ifdef H5
 			that.$set(that, 'pageHeight', app.globalData.windowHeight);
 			// #endif
-			that.$set(that, 'MyMenus', app.globalData.MyMenus);
 			if (!this.$Cache.has('cityList')) this.getCityList();
 			if (that.isLogin == false) {
 				// #ifdef H5
@@ -225,52 +221,18 @@
 			});
 			// #endif
 			if (that.isLogin) {
-				console.log("that.isLogin:",that.isLogin);
-				this.getMyMenus();
-				// this.setVisit();
-				this.getOrderData();
+				console.log("that.isLogin:", that.isLogin);
 				this.$store.dispatch('USERINFO');
 			} else {
 				toLogin();
 			}
 		},
 		methods: {
-			// 记录会员访问
-			// setVisit(){
-			// 	setVisit({
-			// 		url:'/pages/user/index'
-			// 	}).then(res=>{})
-			// },
 			navito(e) {
 				window.location.href = 'https://' + e;
 			},
 			kefuClick() {
 				location.href = this.chatUrl;
-			},
-			getOrderData() {
-				let that = this;
-				orderData().then(res => {
-					that.orderMenu.forEach((item, index) => {
-						switch (item.title) {
-							case '待付款':
-								item.num = res.data.unPaidCount
-								break
-							case '待发货':
-								item.num = res.data.unShippedCount
-								break
-							case '待收货':
-								item.num = res.data.receivedCount
-								break
-							case '待评价':
-								item.num = res.data.evaluatedCount
-								break
-							case '售后/退款':
-								item.num = res.data.refundCount
-								break
-						}
-					})
-					that.$set(that, 'orderMenu', that.orderMenu);
-				})
 			},
 			// 打开授权
 			openAuto() {
@@ -280,8 +242,6 @@
 			// 授权回调
 			onLoadFun() {
 				this.getMyMenus();
-				// this.setVisit();
-				this.getOrderData();
 			},
 			Setting: function() {
 				uni.openSetting({
@@ -300,27 +260,6 @@
 					url: '/pages/users/app_login/index'
 				})
 			},
-			/**
-			 * 
-			 * 获取个人中心图标
-			 */
-			getMyMenus: function() {
-				let that = this;
-				if (this.MyMenus.length) return;
-				getMenuList().then(res => {
-					that.$set(that, 'MyMenus', res.data.routine_my_menus);
-					that.wechatUrl = res.data.routine_my_menus.filter((item) => {
-						return item.url.indexOf('service') !== -1
-					})
-					res.data.routine_my_menus.map((item) => {
-						if (item.url.indexOf('service') !== -1) that.servicePic = item.pic
-					})
-					if(res.data.routine_my_banner){
-						that.imgUrls = res.data.routine_my_banner
-					}
-					console.log("MyMenus",this.MyMenus);
-				});
-			},
 			// 编辑页面
 			goEdit() {
 				if (this.isLogin == false) {
@@ -331,28 +270,11 @@
 					})
 				}
 			},
-			// 签到
-			goSignIn() {
-				uni.navigateTo({
-					url: '/pages/users/user_sgin/index'
-				})
-			},
-			// goMenuPage
-			goMenuPage(url) {
-				if (this.isLogin) {
-					uni.navigateTo({
-						url
-					})
-				} else {
-					// #ifdef MP
-					this.openAuto()
-					// #endif
-				}
-			},
 			// 获取地址数据
 			getCityList: function() {
 				let that = this;
 				getCity().then(res => {
+					console.log("获取地址数据:", res);
 					let oneDay = 24 * 3600 * 1000;
 					this.$Cache.setItem({
 						name: 'cityList',
@@ -364,8 +286,8 @@
 		}
 	}
 </script>
-
-<style lang="scss" scoped>
+<style lang="scss"
+	scoped>
 	page,
 	body {
 		height: 100%;
@@ -375,14 +297,17 @@
 		position: absolute;
 		left: 0;
 		top: 0;
-		width:100%;
+		width: 100%;
 		height: 420rpx;
 		background-image: url('~@/static/images/user_bg.png');
 		background-repeat: no-repeat;
 		background-size: 100% 100%;
 	}
+
 	.contenBox {
 		padding: 0 30rpx;
+		position: relative;
+		z-index: 999;
 	}
 
 	.support {
@@ -415,13 +340,14 @@
 
 		.head {
 			background: linear-gradient(360deg, rgba(255, 121, 49, 0) 0%, rgba(248, 74, 29, 0.82) 39%, #E93323 100%);
-			// padding: 0 30rpx;
 
+			// padding: 0 30rpx;
 			.user-card {
 				position: relative;
 				width: 100%;
 				margin: 0 auto;
 				padding: 35rpx 0 30rpx 0;
+
 				.user-info {
 					z-index: 20;
 					position: relative;
@@ -464,15 +390,31 @@
 						}
 
 						.num {
+							float: right;
 							display: flex;
+							justify-content: space-between;
 							align-items: center;
 							font-size: 26rpx;
 							color: rgba(255, 255, 255, 0.6);
 
-							image {
-								width: 22rpx;
-								height: 23rpx;
-								margin-left: 20rpx;
+							.num-txt {
+								font-weight: 1000;
+							}
+
+							.icon {
+								padding-top: 20rpx;
+								display: flex;
+								height: 70rpx;
+
+								image {
+									width: 22rpx;
+									height: 23rpx;
+									margin-left: 5rpx;
+								}
+
+								.wenzi {
+									line-height: 20rpx;
+								}
 							}
 						}
 					}
@@ -528,7 +470,7 @@
 				padding: 30rpx 16rpx;
 				position: relative;
 				z-index: 11;
-                
+
 				.order-hd {
 					justify-content: space-between;
 					font-size: 30rpx;
@@ -634,7 +576,6 @@
 					margin-bottom: 18rpx;
 				}
 
-
 				&:last-child::before {
 					display: none;
 				}
@@ -650,7 +591,6 @@
 		}
 
 		.order-status-num {
-
 			min-width: 12rpx;
 			background-color: #fff;
 			color: #ee5a52;
