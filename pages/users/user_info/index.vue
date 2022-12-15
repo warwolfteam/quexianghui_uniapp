@@ -1,29 +1,41 @@
 <template>
 	<view>
-		<form @submit="formSubmit" report-submit='true'>
+		<form @submit="formSubmit"
+			report-submit='true'>
 			<view class='personal-data pad30'>
 				<view class='list borRadius14'>
 					<view class="item acea-row row-between-wrapper">
 						<view>头像</view>
-						<view class="pictrue" @click.stop='uploadpic'>
+						<view class="pictrue"
+							@click.stop='uploadpic'>
 							<image :src='newAvatar ? newAvatar : userInfo.avatar'></image>
-							<image src='../../../static/images/alter.png' class="alter"></image>
+							<image src='../../../static/images/alter.png'
+								class="alter"></image>
 						</view>
 					</view>
 					<view class='item acea-row row-between-wrapper'>
 						<view>昵称</view>
-						<view class='input'><input type='text' name='nickname' :value='userInfo.nickname'></input>
+						<view class='input'><input type='text'
+								name='nickname'
+								:value='userInfo.nickname'></input>
 						</view>
 					</view>
 					<view class='item acea-row row-between-wrapper'>
 						<view>手机号码</view>
-						<navigator url="/pages/users/app_login/index" hover-class="none" class="input"
-							v-if="!userInfo.phone">
-							点击绑定手机号<text class="iconfont icon-xiangyou"></text>
+						<navigator url="/pages/users/app_login/index"
+							hover-class="none"
+							class="input"
+							v-if="!userInfo.phone"> 点击绑定手机号<text class="iconfont icon-xiangyou"></text>
 						</navigator>
-						<navigator url="/pages/users/user_phone/index" hover-class="none" class="input" v-else>
+						<navigator url="/pages/users/user_phone/index"
+							hover-class="none"
+							class="input"
+							v-else>
 							<view class='input acea-row row-between-wrapper'>
-								<input type='text' disabled='true' name='phone' :value='userInfo.phone'
+								<input type='text'
+									disabled='true'
+									name='phone'
+									:value='userInfo.phone'
 									class='id'></input>
 								<text class='iconfont icon-xiangyou'></text>
 							</view>
@@ -37,30 +49,59 @@
 						</view> -->
 					</view>
 					<view class='item acea-row row-between-wrapper'>
+						<view>微信号</view>
+						<view class='input'><input type='text'
+								name='nickname'
+								:value='userInfo.nickname'></input>
+						</view>
+					</view>
+					<view class='item acea-row row-between-wrapper relative'>
+						<view>地区</view>
+						<view class="address">
+							<picker mode="multiSelector"
+								@change="bindRegionChange"
+								@columnchange="bindMultiPickerColumnChange"
+								:value="valueRegion"
+								:range="multiArray">
+								<view class='acea-row'>
+									<view class="input">{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
+									<view class='iconfont icon-xiangyou'></view>
+								</view>
+							</picker>
+						</view>
+					</view>
+					<view class='item acea-row row-between-wrapper'>
 						<view>ID号</view>
 						<view class='input acea-row row-between-wrapper'>
-							<input type='text' :value='uid' disabled='true' class='id'></input>
+							<input type='text'
+								:value='uid'
+								disabled='true'
+								class='id'></input>
 							<text class='iconfont icon-suozi'></text>
 						</view>
 					</view>
 					<!-- #ifdef MP -->
 					<view class='item acea-row row-between-wrapper'>
 						<view>权限设置</view>
-						<view class="input" @click="Setting">
-							点击管理<text class="iconfont icon-xiangyou"></text>
+						<view class="input"
+							@click="Setting"> 点击管理<text class="iconfont icon-xiangyou"></text>
 						</view>
 					</view>
 					<!-- #endif -->
-					<view class="item acea-row row-between-wrapper" v-if="userInfo.phone">
+					<view class="item acea-row row-between-wrapper"
+						v-if="userInfo.phone">
 						<view>密码</view>
-						<navigator url="/pages/users/user_pwd_edit/index" hover-class="none" class="input">
-							点击修改密码<text class="iconfont icon-xiangyou"></text>
+						<navigator url="/pages/users/user_pwd_edit/index"
+							hover-class="none"
+							class="input"> 点击修改密码<text class="iconfont icon-xiangyou"></text>
 						</navigator>
 					</view>
 				</view>
-				<button class='modifyBnt bg-color' formType="submit">保存修改</button>
+				<button class='modifyBnt bg-color'
+					formType="submit">保存修改</button>
 				<!-- #ifdef H5 -->
-				<view class="logOut cart-color acea-row row-center-wrapper" @click="outLogin"
+				<view class="logOut cart-color acea-row row-center-wrapper"
+					@click="outLogin"
 					v-if="!this.$wechat.isWeixin()">退出登录</view>
 				<!-- #endif -->
 			</view>
@@ -70,7 +111,6 @@
 		<!-- #endif -->
 	</view>
 </template>
-
 <script>
 	import {
 		userEdit,
@@ -82,6 +122,9 @@
 	import {
 		toLogin
 	} from '@/libs/login.js';
+	import {
+		getCity
+	} from '@/api/api.js';
 	import {
 		mapGetters
 	} from "vuex";
@@ -97,21 +140,148 @@
 		},
 		data() {
 			return {
+				regionDval: ['浙江省', '杭州市', '滨江区'],
+				id: 0, //地址id
+				region: ['省', '市', '区'],
+				valueRegion: [0, 0, 0],
+				district: [],
+				multiArray: [],
+				multiIndex: [0, 0, 0],
+				cityId: 0,
+				defaultRegion: ['广东省', '广州市', '番禺区'],
+				defaultRegionCode: '440113',
 				memberInfo: {},
 				loginType: 'h5', //app.globalData.loginType
 				userIndex: 0,
 				newAvatar: '',
 				isAuto: false, //没有授权的不会自动授权
-				isShowAuth: false //是否隐藏授权
+				isShowAuth: false, //是否隐藏授权
+				diqu: "江西-赣州"
 			};
 		},
 		computed: mapGetters(['isLogin', 'uid', 'userInfo']),
+		watch: {
+			isLogin: {
+				handler: function(newV, oldV) {
+					if (newV) {
+						this.getCityList();
+					}
+				},
+				deep: true
+			}
+		},
 		onLoad() {
 			if (!this.isLogin) {
 				toLogin();
+			} else {
+				this.getCityList();
 			}
 		},
 		methods: {
+			// 点击地区
+			// #ifdef APP-PLUS
+			// 获取选择的地区
+			handleGetRegion(region) {
+				this.region = region
+			},
+			// #endif
+			// 获取地址数据
+			getCityList: function() {
+				let that = this;
+				getCity().then(res => {
+					console.log("getCity:", res);
+					this.district = res.data;
+					console.log("this.district:", this.district);
+					let oneDay = 24 * 3600 * 1000;
+					// this.$Cache.set('cityList', JSON.stringify(res.data)); //设置不过期时间的方法 
+					this.$Cache.setItem({
+						name: 'cityList',
+						value: res.data,
+						expires: oneDay * 7
+					}); //设置七天过期时间
+					that.initialize();
+				})
+			},
+			initialize: function() {
+				let that = this,
+					province = [],
+					city = [],
+					area = [];
+				if (that.district.length) {
+					let cityChildren = that.district[0].child || [];
+					let areaChildren = cityChildren.length ? (cityChildren[0].child || []) : [];
+					that.district.forEach(function(item) {
+						province.push(item.name);
+					});
+					cityChildren.forEach(function(item) {
+						city.push(item.name);
+					});
+					areaChildren.forEach(function(item) {
+						area.push(item.name);
+					});
+					this.multiArray = [province, city, area]
+					console.log("this.multiArray:", this.multiArray);
+				}
+			},
+			bindRegionChange: function(e) {
+				console.log("bindRegionChange:", e);
+				let multiIndex = this.multiIndex,
+					province = this.district[multiIndex[0]] || {
+						child: []
+					},
+					city = province.child[multiIndex[1]] || {
+						cityId: 0
+					},
+					multiArray = this.multiArray,
+					value = e.detail.value;
+				this.region = [multiArray[0][value[0]], multiArray[1][value[1]], multiArray[2][value[2]]]
+				this.cityId = city.cityId
+				this.valueRegion = [0, 0, 0]
+				this.initialize();
+			},
+			bindMultiPickerColumnChange: function(e) {
+				console.log("bindMultiPickerColumnChange:", e);
+				let that = this,
+					column = e.detail.column,
+					value = e.detail.value,
+					currentCity = this.district[value] || {
+						child: []
+					},
+					multiArray = that.multiArray,
+					multiIndex = that.multiIndex;
+				multiIndex[column] = value;
+				switch (column) {
+					case 0:
+						let areaList = currentCity.child[0] || {
+							child: []
+						};
+						multiArray[1] = currentCity.child.map((item) => {
+							return item.name;
+						});
+						multiArray[2] = areaList.child.map((item) => {
+							return item.name;
+						});
+						break;
+					case 1:
+						let cityList = that.district[multiIndex[0]].child[multiIndex[1]].child || [];
+						multiArray[2] = cityList.map((item) => {
+							return item.name;
+						});
+						break;
+					case 2:
+						break;
+				}
+				// #ifdef MP || APP-PLUS
+				this.$set(this.multiArray, 0, multiArray[0]);
+				this.$set(this.multiArray, 1, multiArray[1]);
+				this.$set(this.multiArray, 2, multiArray[2]);
+				// #endif
+				// #ifdef H5
+				this.multiArray = multiArray;
+				// #endif
+				this.multiIndex = multiIndex
+				// this.setData({ multiArray: multiArray, multiIndex: multiIndex});
+			},
 			// 授权关闭
 			authColse: function(e) {
 				this.isShowAuth = e
@@ -138,16 +308,14 @@
 						content: '确认退出登录?',
 						success: function(res) {
 							if (res.confirm) {
-								getLogout()
-									.then(res => {
-										that.$store.commit("LOGOUT");
-										uni.reLaunch({
-											url: '/pages/index/index'
-										});
-									})
-									.catch(err => {
-										console.log(err);
+								getLogout().then(res => {
+									that.$store.commit("LOGOUT");
+									uni.reLaunch({
+										url: '/pages/index/index'
 									});
+								}).catch(err => {
+									console.log(err);
+								});
 							} else if (res.cancel) {
 								console.log('用户点击取消');
 							}
@@ -171,7 +339,6 @@
 					that.newAvatar = res.data.url;
 				});
 			},
-
 			/**
 			 * 提交修改
 			 */
@@ -181,7 +348,7 @@
 				if (!value.nickname) return that.$util.Tips({
 					title: '用户姓名不能为空'
 				});
-				value.avatar = that.newAvatar?that.newAvatar:that.userInfo.avatar;
+				value.avatar = that.newAvatar ? that.newAvatar : that.userInfo.avatar;
 				userEdit(value).then(res => {
 					that.$store.commit("changInfo", {
 						amount1: 'avatar',
@@ -194,7 +361,6 @@
 						tab: 3,
 						url: 1
 					});
-
 				}).catch(msg => {
 					return that.$util.Tips({
 						title: msg || '保存失败，您并没有修改'
@@ -207,8 +373,8 @@
 		}
 	}
 </script>
-
-<style scoped lang="scss">
+<style scoped
+	lang="scss">
 	.personal-data .wrapper {
 		margin: 10rpx 0;
 		background-color: #fff;
