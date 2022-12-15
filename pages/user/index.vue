@@ -138,22 +138,10 @@
 				orderStatusNum: {},
 				MyMenus: [{
 					"wap_url": "/pages/users/user_vip/index",
-					"name": "会员中心",
+					"name": "开通会员",
 					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/dd497d333f4541d7ae41b2c579706370jhp2x39yrg.png",
 					"id": 1238,
 					"url": "/pages/users/user_vip/index"
-				}, {
-					"wap_url": "/pages/activity/bargain/index",
-					"name": "砍价记录",
-					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/5d6617d3440c4d67802fdf064b77b471qzfen9343d.png",
-					"id": 1239,
-					"url": "/pages/activity/bargain/index"
-				}, {
-					"wap_url": "/pages/users/user_spread_user/index",
-					"name": "我的推广",
-					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/197b96e3a4d24728b4069b0c288326352gcds3duga.png",
-					"id": 1240,
-					"url": "/pages/users/user_spread_user/index"
 				}, {
 					"wap_url": "/pages/users/user_money/index",
 					"name": "我的余额",
@@ -161,23 +149,35 @@
 					"id": 1241,
 					"url": "/pages/users/user_money/index"
 				}, {
+					"wap_url": "/pages/users/order_list/index",
+					"name": "我的订单",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/886e04146694474c966d346222fe2897ealwo6qycj.png",
+					"id": 1242,
+					"url": "/pages/users/order_list/index"
+				}, {
 					"wap_url": "/pages/users/user_address_list/index",
-					"name": "地址信息",
+					"name": "消息通知",
 					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/886e04146694474c966d346222fe2897ealwo6qycj.png",
 					"id": 1242,
 					"url": "/pages/users/user_address_list/index"
 				}, {
-					"wap_url": "/pages/users/user_goods_collection/index",
-					"name": "我的收藏",
-					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/3308f2d779874079b0e02ae206cf141bwb23ii2z52.png",
-					"id": 1243,
-					"url": "/pages/users/user_goods_collection/index"
-				}, {
-					"wap_url": "/pages/users/user_coupon/index",
-					"name": "优惠券",
+					"wap_url": "/pages/users/user_info/index",
+					"name": "我的账户",
 					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/11113e1876ac427bb3173086a3bd6c5bhyan1ea9pz.png",
 					"id": 1244,
-					"url": "/pages/users/user_coupon/index"
+					"url": "/pages/users/user_info/index"
+				}, {
+					"wap_url": "/pages/users/user_goods_collection/index",
+					"name": "身份认证",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/11113e1876ac427bb3173086a3bd6c5bhyan1ea9pz.png",
+					"id": 1244,
+					"url": "/pages/users/user_goods_collection/index"
+				}, {
+					"wap_url": "/pages/users/user_address_list/index",
+					"name": "申请商家",
+					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/11113e1876ac427bb3173086a3bd6c5bhyan1ea9pz.png",
+					"id": 1244,
+					"url": "/pages/users/user_address_list/index"
 				}, {
 					"wap_url": "https://yzf.qq.com/xv/web/static/chat/index.html?sign=37ef9b97db2656c32340cde61ce2b56a2176efe72ac7ed421c77607b5c816611ec4775a17c7605b33df1ffe1d22a4ce7464dd07b",
 					"name": "联系客服",
