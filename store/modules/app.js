@@ -10,24 +10,22 @@ import Cache from '../../utils/cache';
 import {
 	USER_INFO
 } from '../../config/cache';
-
 const state = {
 	token: Cache.get(LOGIN_STATUS) || '',
 	backgroundColor: "#fff",
-	userInfo: Cache.get(USER_INFO)?JSON.parse(Cache.get(USER_INFO)):null,
+	userInfo: Cache.get(USER_INFO) ? JSON.parse(Cache.get(USER_INFO)) : null,
 	uid: Cache.get(UID) || null,
 	homeActive: false,
 	chatUrl: Cache.get('chatUrl') || '',
-	systemPlatform: Cache.get(PLATFORM)?Cache.get(PLATFORM):'',
+	systemPlatform: Cache.get(PLATFORM) ? Cache.get(PLATFORM) : '',
 	productType: Cache.get('productType') || ''
 };
-
 const mutations = {
 	LOGIN(state, opt) {
 		state.token = opt.token;
 		Cache.set(LOGIN_STATUS, opt.token);
 	},
-	SETUID(state,val){                                                
+	SETUID(state, val) {
 		state.uid = val;
 		Cache.set(UID, val);
 	},
@@ -55,13 +53,13 @@ const mutations = {
 	CLOSE_HOME(state) {
 		state.homeActive = false;
 	},
-	SET_CHATURL(state, chatUrl){
+	SET_CHATURL(state, chatUrl) {
 		state.chatUrl = chatUrl;
 	},
 	// AuthorizeType(state, authorizeType){
 	// 	state.authorizeType = authorizeType;
 	// },
-	SYSTEM_PLATFORM(state, systemPlatform){
+	SYSTEM_PLATFORM(state, systemPlatform) {
 		state.systemPlatform = systemPlatform;
 		Cache.set(PLATFORM, systemPlatform);
 	},
@@ -76,7 +74,6 @@ const mutations = {
 		Cache.set('productType', productType);
 	}
 };
-
 const actions = {
 	USERINFO({
 		state,
@@ -84,12 +81,11 @@ const actions = {
 	}, force) {
 		return new Promise(reslove => {
 			getUserInfo().then(res => {
+				console.log("USERINFO--store:", res);
 				commit("UPDATE_USERINFO", res.data);
 				reslove(res.data);
 			});
-		}).catch(() => {
-		
-		});
+		}).catch(() => {});
 		// debugger
 		// if (state.userInfo !== null && !force)
 		// 	return Promise.resolve(state.userInfo);
@@ -100,11 +96,9 @@ const actions = {
 		// 			reslove(res.data);
 		// 		});
 		// 	}).catch(() => {
-
 		// 	});
 	}
 };
-
 export default {
 	state,
 	mutations,

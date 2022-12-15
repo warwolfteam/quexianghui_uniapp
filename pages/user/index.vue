@@ -225,6 +225,7 @@
 			});
 			// #endif
 			if (that.isLogin) {
+				console.log("that.isLogin:",that.isLogin);
 				this.getMyMenus();
 				// this.setVisit();
 				this.getOrderData();

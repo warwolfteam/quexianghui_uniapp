@@ -1,41 +1,56 @@
 <template>
 	<view class="page">
-		<view class="system-height" :style="{height:statusBarHeight}"></view>
+		<view class="system-height"
+			:style="{height:statusBarHeight}"></view>
 		<!-- #ifdef MP -->
-		<view class="title-bar" style="height: 43px;">
-			<view class="icon" @click="back" v-if="!isHome">
+		<view class="title-bar"
+			style="height: 43px;">
+			<view class="icon"
+				@click="back"
+				v-if="!isHome">
 				<image src="../static/left.png"></image>
 			</view>
-			<view class="icon" @click="home" v-else>
+			<view class="icon"
+				@click="home"
+				v-else>
 				<image src="../static/home.png"></image>
-			</view>
-			账户登录
+			</view> 账户登录
 		</view>
 		<!-- #endif -->
 		<view class="wechat_login">
 			<view class="img">
-				<image src="../static/wechat_login.png" mode="widthFix"></image>
+				<image src="../static/wechat_login.png"
+					mode="widthFix"></image>
 			</view>
 			<view class="btn-wrapper">
 				<!-- #ifdef H5 -->
-				<button hover-class="none" @click="wechatLogin" class="bg-green btn1">微信登录</button>
+				<button hover-class="none"
+					@click="wechatLogin"
+					class="bg-green btn1">微信登录</button>
 				<!-- #endif -->
 				<!-- #ifdef MP -->
-				<button hover-class="none" @tap="getUserProfile" class="bg-green btn1">微信登录</button>
+				<button hover-class="none"
+					@tap="getUserProfile"
+					class="bg-green btn1">微信登录</button>
 				<!-- #endif -->
 				<!-- <button hover-class="none" @click="isUp = true" class="btn2">手机号登录</button> -->
 			</view>
 		</view>
 		<block v-if="isUp">
-			<mobileLogin :isUp="isUp" @close="maskClose" :authKey="authKey" @wechatPhone="wechatPhone"></mobileLogin>
+			<mobileLogin :isUp="isUp"
+				@close="maskClose"
+				:authKey="authKey"
+				@wechatPhone="wechatPhone"></mobileLogin>
 		</block>
 		<block v-if="isPhoneBox">
-			<routinePhone :logoUrl="logoUrl" :isPhoneBox="isPhoneBox" @close="bindPhoneClose" :authKey="authKey">
+			<routinePhone :logoUrl="logoUrl"
+				:isPhoneBox="isPhoneBox"
+				@close="bindPhoneClose"
+				:authKey="authKey">
 			</routinePhone>
 		</block>
 	</view>
 </template>
-
 <script>
 	const app = getApp();
 	let statusBarHeight = uni.getSystemInfoSync().statusBarHeight + 'px';
@@ -88,7 +103,7 @@
 			document.body.addEventListener("focusout", () => {
 				setTimeout(() => {
 					const scrollHeight = document.documentElement.scrollTop || document.body.scrollTop ||
-						0;
+					0;
 					window.scrollTo(0, Math.max(scrollHeight - 1, 0));
 				}, 100);
 			});
@@ -113,6 +128,7 @@
 						this.$store.commit('LOGIN', {
 							token: res.token
 						});
+						console.log("公众号授权登录回调-uid-res:", res);
 						this.$store.commit("SETUID", res.uid);
 						this.getUserInfo();
 						this.wechatPhone();
@@ -128,7 +144,6 @@
 			// } else {
 			// 	this.isHome = false
 			// }
-
 		},
 		methods: {
 			back() {
@@ -155,7 +170,6 @@
 				} else {
 					this.isPhoneBox = false
 				}
-
 			},
 			// #ifdef MP
 			// 小程序获取手机号码
@@ -163,44 +177,40 @@
 				uni.showLoading({
 					title: '正在登录中'
 				});
-				Routine.getCode()
-					.then(code => {
-						this.getUserPhoneNumber(e.detail.encryptedData, e.detail.iv, code);
-					})
-					.catch(error => {
-						uni.$emit('closePage', false)
-						uni.hideLoading();
-					});
+				Routine.getCode().then(code => {
+					this.getUserPhoneNumber(e.detail.encryptedData, e.detail.iv, code);
+				}).catch(error => {
+					uni.$emit('closePage', false)
+					uni.hideLoading();
+				});
 			},
 			// 小程序获取手机号码回调
 			getUserPhoneNumber(encryptedData, iv, code) {
 				getUserPhone({
-						encryptedData: encryptedData,
-						iv: iv,
-						code: code,
-						type: 'routine',
-						key: this.authKey
-					})
-					.then(res => {
-						this.$store.commit('LOGIN', {
-							token: res.data.token
-						});
-						this.$store.commit("SETUID", res.data.uid);
-						this.getUserInfo();
-						this.$util.Tips({
-							title: '登录成功',
-							icon: 'success'
-						}, {
-							tab: 3
-						})
-
-					})
-					.catch(res => {
-						uni.hideLoading();
-						that.$util.Tips({
-							title: res
-						});
+					encryptedData: encryptedData,
+					iv: iv,
+					code: code,
+					type: 'routine',
+					key: this.authKey
+				}).then(res => {
+					this.$store.commit('LOGIN', {
+						token: res.data.token
 					});
+					console.log("小程序获取手机号码回调-uid-res:", res);
+					this.$store.commit("SETUID", res.data.uid);
+					this.getUserInfo();
+					this.$util.Tips({
+						title: '登录成功',
+						icon: 'success'
+					}, {
+						tab: 3
+					})
+				}).catch(res => {
+					uni.hideLoading();
+					that.$util.Tips({
+						title: res
+					});
+				});
 			},
 			/**
 			 * 获取个人用户信息
@@ -224,21 +234,16 @@
 				uni.showLoading({
 					title: '正在登录中'
 				});
-				Routine.getUserProfile()
-					.then(res => {
-						Routine.getCode()
-							.then(code => {
-								self.getWxUser(code, res);
-							})
-							.catch(res => {
-								uni.hideLoading();
-							});
-					})
-					.catch(res => {
+				Routine.getUserProfile().then(res => {
+					Routine.getCode().then(code => {
+						self.getWxUser(code, res);
+					}).catch(res => {
 						uni.hideLoading();
 					});
+				}).catch(res => {
+					uni.hideLoading();
+				});
 			},
-
 			getWxUser(code, res) {
 				let self = this
 				let userInfo = res.userInfo;
@@ -252,40 +257,36 @@
 				userInfo.province = userInfo.userInfo.province;
 				userInfo.sex = userInfo.userInfo.gender;
 				userInfo.type = 'routine'
-				Routine.authUserInfo(userInfo.code, userInfo)
-					.then(res => {
-						self.authKey = res.data.key;
-						if (res.data.type === 'register') {
-							uni.hideLoading();
-							self.isPhoneBox = true
-						}
-						if (res.data.type === 'login') {
-							uni.hideLoading();
-							self.$store.commit('LOGIN', {
-								token: res.data.token
-							});
-							self.$store.commit("SETUID", res.data.uid);
-							self.getUserInfo();
-							self.$util.Tips({
-								title: res,
-								icon: 'success'
-							}, {
-								tab: 3
-							})
-						}
-					})
-					.catch(res => {
+				Routine.authUserInfo(userInfo.code, userInfo).then(res => {
+					self.authKey = res.data.key;
+					if (res.data.type === 'register') {
 						uni.hideLoading();
-						uni.showToast({
-							title: res,
-							icon: 'none',
-							duration: 2000
+						self.isPhoneBox = true
+					}
+					if (res.data.type === 'login') {
+						uni.hideLoading();
+						self.$store.commit('LOGIN', {
+							token: res.data.token
 						});
+						console.log("getWxUser-self.$store.commit-uid-res:", res);
+						self.$store.commit("SETUID", res.data.uid);
+						self.getUserInfo();
+						self.$util.Tips({
+							title: res,
+							icon: 'success'
+						}, {
+							tab: 3
+						})
+					}
+				}).catch(res => {
+					uni.hideLoading();
+					uni.showToast({
+						title: res,
+						icon: 'none',
+						duration: 2000
 					});
-
+				});
 			},
-
-
 			// #endif
 			// #ifdef H5
 			// 获取url后面的参数
@@ -341,13 +342,12 @@
 		}
 	}
 </script>
-
 <style lang="scss">
 	page {
 		background: #fff;
 		height: 100%;
 	}
-    
+
 	.page {
 		background: #fff;
 		height: 100%;

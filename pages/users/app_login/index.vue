@@ -1,13 +1,20 @@
 <template>
 	<view class="appBox">
 		<div class="shading">
-			<image :src="logoUrl" v-if="logoUrl" />
-			<image src="/static/images/logo2.png" v-else />
+			<image :src="logoUrl"
+				v-if="logoUrl" />
+			<image src="/static/images/logo2.png"
+				v-else />
 		</div>
-		<mobileLogin :isUp="isUp" :isShow="isShow" :platform="platform" :isPos="isPos" :appleShow="appleShow" :authKey="authKey" @wechatPhone="wechatPhone"></mobileLogin>
+		<mobileLogin :isUp="isUp"
+			:isShow="isShow"
+			:platform="platform"
+			:isPos="isPos"
+			:appleShow="appleShow"
+			:authKey="authKey"
+			@wechatPhone="wechatPhone"></mobileLogin>
 	</view>
 </template>
-
 <script>
 	const app = getApp();
 	import sendVerifyCode from "@/mixins/SendVerifyCode";
@@ -42,7 +49,6 @@
 				isPos: false,
 				platform: '', // 手机平台
 				appleShow: '' //是否是苹果登录
-				
 			}
 		},
 		components: {
@@ -73,7 +79,7 @@
 		},
 		methods: {
 			wechatPhone() {
-			this.$Cache.clear('snsapiKey');
+				this.$Cache.clear('snsapiKey');
 				if (this.options.back_url) {
 					let url = uni.getStorageSync('snRouter');
 					url = url.indexOf('/pages/index/index') != -1 ? '/' : url;
@@ -142,6 +148,7 @@
 					this.$store.commit('LOGIN', {
 						token: res.data.token
 					});
+					console.log("小程序登录phoneSilenceAuth-uid:", res);
 					this.$store.commit("SETUID", res.data.uid);
 					this.getUserInfo();
 				}).catch(error => {
@@ -177,13 +184,13 @@
 		}
 	}
 </script>
-
 <style>
 	page {
 		height: 100%;
 	}
 </style>
-<style lang="scss" scoped>
+<style lang="scss"
+	scoped>
 	.appBox {
 		background-color: #fff;
 		height: 100%;
@@ -198,9 +205,6 @@
 		align-items: center;
 		justify-content: center;
 		width: 100%;
-
-
-
 
 		image {
 			width: 180rpx;

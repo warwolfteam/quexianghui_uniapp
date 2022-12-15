@@ -71,6 +71,7 @@
 			},
 			getUserInfo(code){
 				Routine.getUserInfo().then(res=>{
+					console.log("getUserInfo:",res);
 					let userInfo = res.userInfo
 					userInfo.code = code;
 					userInfo.spread_spid = app.globalData.spid;//获取推广人ID

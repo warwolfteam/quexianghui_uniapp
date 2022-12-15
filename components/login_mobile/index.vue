@@ -1,24 +1,36 @@
 <template>
 	<view v-if="isUp">
-		<view class="mobile-bg" v-if="isShow" @click="close"></view>
-		<view class="mobile-mask animated" :class="{slideInUp:isUp}" :style="{position:isPos?'fixed':'static'}">
+		<view class="mobile-bg"
+			v-if="isShow"
+			@click="close"></view>
+		<view class="mobile-mask animated"
+			:class="{slideInUp:isUp}"
+			:style="{position:isPos?'fixed':'static'}">
 			<view class="input-item">
-				<input type="text" v-model="account" placeholder="输入手机号" />
+				<input type="text"
+					v-model="account"
+					placeholder="输入手机号" />
 			</view>
 			<view class="input-item">
-				<input type="text" v-model="codeNum" placeholder="输入验证码" />
-				<button class="code" :disabled="disabled" @click="code">{{text}}</button>
+				<input type="text"
+					v-model="codeNum"
+					placeholder="输入验证码" />
+				<button class="code"
+					:disabled="disabled"
+					@click="code">{{text}}</button>
 			</view>
-			<view class="sub_btn" @click="loginBtn">{{(!userInfo.phone && isLogin) || (userInfo.phone && isLogin)?'立即绑定':'立即登录'}}</view>
+			<view class="sub_btn"
+				@click="loginBtn">{{(!userInfo.phone && isLogin) || (userInfo.phone && isLogin)?'立即绑定':'立即登录'}}</view>
 		</view>
 	</view>
 </template>
-
 <script>
 	const app = getApp();
 	import sendVerifyCode from "@/mixins/SendVerifyCode";
 	import Routine from '@/libs/routine';
-	import {mapGetters} from "vuex";
+	import {
+		mapGetters
+	} from "vuex";
 	import {
 		loginMobile,
 		registerVerify,
@@ -37,7 +49,7 @@
 	const BACK_URL = "login_back_url";
 	export default {
 		name: 'login_mobile',
-		computed: mapGetters(['userInfo','isLogin']),
+		computed: mapGetters(['userInfo', 'isLogin']),
 		props: {
 			isUp: {
 				type: Boolean,
@@ -76,9 +88,7 @@
 		mounted() {
 			//this.getCode();
 		},
-		onLoad() {
-			
-		},
+		onLoad() {},
 		methods: {
 			// 获取验证码
 			async code() {
@@ -130,7 +140,7 @@
 					title: '请输入正确的验证码'
 				});
 				uni.showLoading({
-					title: !this.userInfo.phone && this.isLogin?'正在绑定中':'正在登录中'
+					title: !this.userInfo.phone && this.isLogin ? '正在绑定中' : '正在登录中'
 				});
 				if (!this.userInfo.phone && this.isLogin) {
 					iosBinding({
@@ -163,6 +173,7 @@
 						that.$store.commit('LOGIN', {
 							token: res.data.token
 						});
+						console.log("login_mobile-- getUserPhone-登录--uid:", res);
 						that.$store.commit("SETUID", res.data.uid);
 						that.getUserInfo();
 					}).catch(error => {
@@ -183,6 +194,7 @@
 					phone: this.account,
 					captcha: this.codeNum
 				}).then(res => {
+					console.log("login_mobile-MP-uid:", res);
 					this.$store.commit('LOGIN', res.data.token);
 					this.$store.commit("SETUID", res.data.uid);
 					this.getUserInfo();
@@ -218,8 +230,8 @@
 		}
 	}
 </script>
-
-<style lang="stylus" scoped>
+<style lang="stylus"
+	scoped>
 	.mobile-bg {
 		position: fixed;
 		left: 0;
