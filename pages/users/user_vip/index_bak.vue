@@ -8,8 +8,7 @@
 					</view>
 					<view class="text acea-row row-middle">
 						<view class="name line1">{{userInfo.nickname}}</view>
-						<view class="vip"
-							v-if='userInfo.vip'>
+						<view class="vip" v-if='userInfo.vip'>
 							<image :src="userInfo.vipIcon"></image>{{userInfo.vipName}}
 						</view>
 					</view>
@@ -21,13 +20,10 @@
 				<view class="axis">
 					<view class="bar">
 						<view class="barCon">
-							<view class="solidBar"
-								:style="'width: ' + widthLen +'%;'"></view>
+							<view class="solidBar" :style="'width: ' + widthLen +'%;'"></view>
 						</view>
 						<view class="acea-row row-around row-middle">
-							<view class="spotw acea-row row-center"
-								v-for="(item,index) in levelList"
-								:key='index'>
+							<view class="spotw acea-row row-center" v-for="(item,index) in levelList" :key='index'>
 								<view class="spot"
 									:class="current >item.experience?'past':'' + ' ' + current==item.experience?'on':''">
 								</view>
@@ -35,10 +31,8 @@
 						</view>
 					</view>
 					<view class="numList acea-row row-around row-middle">
-						<view class="item"
-							:class="current >=item.experience?'past':''"
-							v-for="(item,index) in levelList"
-							:key="index">{{item.experience}}</view>
+						<view class="item" :class="current >=item.experience?'past':''"
+							v-for="(item,index) in levelList" :key="index">{{item.experience}}</view>
 					</view>
 				</view>
 				<view class="vipList acea-row">
@@ -87,9 +81,7 @@
 								<view class="info line1">每日签到可获得经验值</view>
 							</view>
 						</view>
-						<navigator url='/pages/users/user_sgin/index'
-							class="button"
-							hover-class="none">去获取</navigator>
+						<navigator url='/pages/users/user_sgin/index' class="button" hover-class="none">去获取</navigator>
 					</view>
 					<view class="item acea-row row-between-wrapper">
 						<view class="picTxt acea-row row-middle">
@@ -99,17 +91,44 @@
 								<view class="info line1">购买商品可获得对应是经验值</view>
 							</view>
 						</view>
-						<navigator url="/pages/goods_cate/goods_cate"
-							class="button"
-							hover-class="none"
+						<navigator url="/pages/goods_cate/goods_cate" class="button" hover-class="none"
 							open-type='switchTab'>去获取</navigator>
 					</view>
+					<!-- <view class="item acea-row row-between-wrapper">
+						<view class="picTxt acea-row row-middle">
+							<view class="pictrue on2"><text class="iconfont icon-yaoqing"></text></view>
+							<view class="text">
+								<view class="name line1">邀请好友</view>
+								<view class="info line1">邀请好友注册商城可获得经验值</view>
+							</view>
+						</view>
+						<navigator url="/pages/users/user_spread_code/index" class="button" hover-class="none">去获取</navigator>
+					</view> -->
 				</view>
 			</view>
+		</view>
+		<view class="detailed" v-if="expList.length">
+			<view class="public_title acea-row row-middle">
+				<view class="icons"></view>经验值明细
+			</view>
+			<view class="list">
+				<view class="item acea-row row-between-wrapper" v-for="(item,index) in expList" :key="index">
+					<view class="text">
+						<view class="name">{{item.title}}</view>
+						<view class="data">{{item.add_time}}</view>
+					</view>
+					<view class="num" v-if="item.pm">+{{item.number}}</view>
+					<view class="num on" v-else>-{{item.number}}</view>
+				</view>
+			</view>
+		</view>
+		<view class='loadingicon acea-row row-center-wrapper' v-if="expList.length">
+			<text class='loading iconfont icon-jiazai' :hidden='loading==false'></text>{{loadTitle}}
 		</view>
 		<home></home>
 	</view>
 </template>
+
 <script>
 	import home from '@/components/home';
 	import {
@@ -126,6 +145,7 @@
 		computed: mapGetters(['userInfo']),
 		data() {
 			return {
+				//userInfo: '',
 				levelInfo: '',
 				levelList: [],
 				current: 0,
@@ -164,7 +184,9 @@
 					let divisor = levelListLen.experience - maxn ? levelListLen.experience - maxn : 1;
 					// 每小格所占的百分比
 					let per = (that.levelInfo - maxn) / divisor / levelList.length;
+
 					that.widthLen = ((list.length - 0.5) / (levelList.length)) * 100 + per * 100
+
 				}).catch(function(res) {
 					return that.$util.Tips({
 						title: res
@@ -179,11 +201,9 @@
 					page: that.page,
 					limit: that.limit
 				}).then(res => {
-					console.log("getlevelExpList:", res);
 					let list = res.data.list,
 						loadend = list.length < that.limit;
 					let expList = that.$util.SplitArray(list, that.expList);
-					console.log("expList", expList);
 					that.$set(that, 'expList', expList);
 					that.loadend = loadend;
 					that.loadTitle = loadend ? '我也是有底线的' : '加载更多';
@@ -200,6 +220,7 @@
 		}
 	}
 </script>
+
 <style lang="scss">
 	.memberVip {
 		.bg {
@@ -363,6 +384,8 @@
 				}
 			}
 
+
+
 			.module {
 				padding: 40rpx 30rpx 0 30rpx;
 
@@ -445,6 +468,42 @@
 				height: 28rpx;
 				background: rgba(230, 192, 131, 1);
 				margin-right: 10rpx;
+			}
+		}
+
+		.detailed {
+			padding: 30rpx 30rpx 0 30rpx;
+			margin-top: 15rpx;
+			background-color: #fff;
+
+			.list {
+				margin-top: 15rpx;
+
+				.item {
+					height: 122rpx;
+					border-bottom: 1px solid #EEEEEE;
+
+					.text {
+						.name {
+							font-size: 28rpx;
+							color: #282828;
+						}
+
+						.data {
+							color: #999;
+							font-size: 24rpx;
+						}
+					}
+
+					.num {
+						font-size: 32rpx;
+						color: $theme-color;
+					}
+
+					.on {
+						color: #16AC57;
+					}
+				}
 			}
 		}
 	}
