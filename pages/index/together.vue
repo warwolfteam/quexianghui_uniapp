@@ -1209,7 +1209,7 @@
 
 					.item {
 						width: 100%;
-						height: 300rpx;
+						// height: 300rpx;
 						margin-bottom: 20rpx;
 						padding-top: 20rpx;
 						background-color: #fff;
@@ -1219,7 +1219,7 @@
 
 						.pictrue {
 							position: relative;
-							line-height: 250rpx;
+							// line-height: 250rpx;
 							width: 30%;
 
 							image {
