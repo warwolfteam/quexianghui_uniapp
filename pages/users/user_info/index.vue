@@ -14,7 +14,56 @@
 						</view>
 					</view>
 					<view class='item acea-row row-between-wrapper'>
+						<view>ID号</view>
+						<view class='input acea-row row-between-wrapper'>
+							<input type='text'
+								:value='uid'
+								disabled='true'
+								class='id'></input>
+							<text class='iconfont icon-suozi'></text>
+						</view>
+					</view>
+					<view class='item acea-row row-between-wrapper'>
 						<view>昵称</view>
+						<view class='input'><input type='text'
+								name='nickname'
+								:value='userInfo.nickname'></input>
+						</view>
+					</view>
+					<view class='item acea-row row-between-wrapper'>
+						<view>性别</view>
+						<view class="input"
+							@click="setSex"
+							v-if="!userInfo.sex"> 点击选择性别 </view>
+						<view class="input"
+							@click="setSex"
+							v-else> {{sex}}
+						</view>
+					</view>
+					<view class='item acea-row row-between-wrapper'>
+						<view>年龄</view>
+						<view class='input'><input type='text'
+								placeholder="请输入年龄"
+								name='nickname'
+								:value='userInfo.age'></input>
+						</view>
+					</view>
+					<view class='item acea-row row-between-wrapper relative'>
+						<view>地区</view>
+						<view class="address">
+							<picker mode="multiSelector"
+								@change="bindRegionChange"
+								@columnchange="bindMultiPickerColumnChange"
+								:value="valueRegion"
+								:range="multiArray">
+								<view class='acea-row'>
+									<view class="input">{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
+								</view>
+							</picker>
+						</view>
+					</view>
+					<view class='item acea-row row-between-wrapper'>
+						<view>微信号</view>
 						<view class='input'><input type='text'
 								name='nickname'
 								:value='userInfo.nickname'></input>
@@ -40,45 +89,6 @@
 								<text class='iconfont icon-xiangyou'></text>
 							</view>
 						</navigator>
-						<!-- <navigator url="/pages/users/user_phone/index" hover-class="none" class="input" v-if="!memberInfo.phone">
-							点击绑定手机号<text class="iconfont icon-xiangyou"></text>
-						</navigator>
-						<view class='input acea-row row-between-wrapper' v-else>
-							<input type='text' disabled='true' name='phone' :value='memberInfo.phone' class='id'></input>
-							<text class='iconfont icon-suozi'></text>
-						</view> -->
-					</view>
-					<view class='item acea-row row-between-wrapper'>
-						<view>微信号</view>
-						<view class='input'><input type='text'
-								name='nickname'
-								:value='userInfo.nickname'></input>
-						</view>
-					</view>
-					<view class='item acea-row row-between-wrapper relative'>
-						<view>地区</view>
-						<view class="address">
-							<picker mode="multiSelector"
-								@change="bindRegionChange"
-								@columnchange="bindMultiPickerColumnChange"
-								:value="valueRegion"
-								:range="multiArray">
-								<view class='acea-row'>
-									<view class="input">{{region[0]}}，{{region[1]}}，{{region[2]}}</view>
-									<view class='iconfont icon-xiangyou'></view>
-								</view>
-							</picker>
-						</view>
-					</view>
-					<view class='item acea-row row-between-wrapper'>
-						<view>ID号</view>
-						<view class='input acea-row row-between-wrapper'>
-							<input type='text'
-								:value='uid'
-								disabled='true'
-								class='id'></input>
-							<text class='iconfont icon-suozi'></text>
-						</view>
 					</view>
 					<!-- #ifdef MP -->
 					<view class='item acea-row row-between-wrapper'>
@@ -140,6 +150,7 @@
 		},
 		data() {
 			return {
+				sex: "男",
 				regionDval: ['浙江省', '杭州市', '滨江区'],
 				id: 0, //地址id
 				region: ['省', '市', '区'],
@@ -178,6 +189,10 @@
 			}
 		},
 		methods: {
+			// 设置性别
+			setSex() {
+				console.log("设置性别");
+			},
 			// 点击地区
 			// #ifdef APP-PLUS
 			// 获取选择的地区
