@@ -62,43 +62,12 @@
 						</block>
 					</swiper>
 				</view>
-				<!-- 新闻简报 -->
-				<!-- 	<view class='notice acea-row row-middle row-between' v-if="roll.length">
-					<view class="pic">
-						<image src="/static/images/xinjian.png"></image>
-					</view>
-					<text class='line'>|</text>
-					<view class='swipers'>
-						<swiper :indicator-dots="indicatorDots" :autoplay="autoplay" interval="2500" duration="500" vertical="true"
-						 circular="true">
-							<block v-for="(item,index) in roll" :key='index'>
-								<swiper-item>
-									<navigator class='item' :url='item.url' hover-class='none'>
-										<view class='line1'>{{item.info}}</view>
-									</navigator>
-								</swiper-item>
-							</block>
-						</swiper>
-					</view>
-					<view class="iconfont icon-xiangyou"></view>
-				</view> -->
 				<!-- menu -->
 				<view class='nav acea-row'
 					v-if="menus.length">
 					<block v-for="(item,index) in menus"
 						:key="index">
 						<navigator class='item'
-							v-if="item.show == '1'"
-							:url='item.url'
-							open-type='switchTab'
-							hover-class='none'>
-							<view class='pictrue'>
-								<image :src='item.pic'></image>
-							</view>
-							<view class="menu-txt">{{item.name}}</view>
-						</navigator>
-						<navigator class='item'
-							v-else
 							:url='item.url'
 							hover-class='none'>
 							<view class='pictrue'>
@@ -108,71 +77,6 @@
 						</navigator>
 					</block>
 				</view>
-				<!-- 优惠券 -->
-				<!-- <view class="couponIndex"
-					v-if="couponList.length>0">
-					<view class="acea-row"
-						style="height: 100%;">
-						<view class="titBox">
-							<view class="tit1">领取优惠券</view>
-							<view class="tit2">福利大礼包，省了又省</view>
-							<navigator class='item'
-								url='/pages/users/user_get_coupon/index'
-								hover-class='none'>
-								<view class="tit3">查看全部 <text class="iconfont icon-xiangyou"></text></view>
-							</navigator>
-						</view>
-						<view class="listBox acea-row">
-							<view class="list"
-								:class='item.isUse ? "listHui" : "listActive" '
-								v-for="(item, index) in couponList.slice(0,2)"
-								:key="index">
-								<view class="tit line1"
-									:class='item.isUse ? "pricehui" : "titActive" '>{{item.name}}</view>
-								<view class="price"
-									:class='item.isUse ? "pricehui" : "icon-color" '>
-									{{item.money?Number(item.money):''}}<text class="yuan">元</text>
-								</view>
-								<view class="ling"
-									v-if="!item.isUse"
-									:class='item.isUse ? "pricehui" : "icon-color" '
-									@click="getCoupon(item.id,index)">领取</view>
-								<view class="ling"
-									v-else
-									:class='item.isUse ? "pricehui fonthui" : "icon-color" '>已领取</view>
-								<view class="priceM">满{{item.minPrice?Number(item.minPrice):''}}元可用</view>
-							</view>
-						</view>
-					</view>
-				</view> -->
-				<!-- 活动-->
-				<!-- <a_seckill></a_seckill>
-				<b_combination></b_combination>
-				<c_bargain></c_bargain> -->
-				<!-- 首页推荐 -->
-				<!-- :class="iSshowH?'on':''" -->
-				<!-- <view class="sticky-box"
-					:style="'top:'+(marTop)+'px;'">
-					<scroll-view class="scroll-view_H"
-						style="width: 100%;"
-						scroll-x="true"
-						scroll-with-animation
-						:scroll-left="tabsScrollLeft"
-						@scroll="scroll">
-						<view class="tab nav-bd"
-							id="tab_list">
-							<view id="tab_item"
-								:class="{ 'active': listActive == index}"
-								class="item"
-								v-for="(item, index) in explosiveMoney"
-								:key="index"
-								@click="ProductNavTab(item,index)">
-								<view class="txt">{{item.name}}</view>
-								<view class="label">{{item.info}}</view>
-							</view>
-						</view>
-					</scroll-view>
-				</view> -->
 				<!-- 首发新品 -->
 				<view class="index-product-wrapper"
 					:class="iSshowH?'on':''">
@@ -183,24 +87,11 @@
 							:key="index"
 							@click="goDetail(item)">
 							<view class="pictrue">
-								<!-- 				<span class="pictrue_log pictrue_log_class"
-									v-if="item.activityH5 && item.activityH5.type === '1'">秒杀</span>
-								<span class="pictrue_log pictrue_log_class"
-									v-if="item.activityH5 && item.activityH5.type === '2'">砍价</span>
-								<span class="pictrue_log pictrue_log_class"
-									v-if="item.activityH5 && item.activityH5.type === '3'">拼团</span> -->
 								<image :src="item.image"
 									mode=""></image>
 							</view>
 							<view class="text-info">
 								<view class="title line2">{{item.nickName}} • {{item.age}}岁</view>
-								
-								<!-- <view class="old-price"><text>¥{{item.otPrice}}</text></view>
-								<view class="price">
-									<text>￥</text>{{item.price}}
-									<view class="txt"
-										v-if="item.checkCoupon">券</view>
-								</view> -->
 							</view>
 						</view>
 					</view>
@@ -232,10 +123,6 @@
 	import {
 		getTemlIds
 	} from '@/api/api.js';
-	// import {
-	// 	SUBSCRIBE_MESSAGE,
-	// 	TIPS_KEY
-	// } from '@/config/cache';
 	// #endif
 	// #ifdef H5  
 	import {
@@ -245,11 +132,6 @@
 	import {
 		getShare
 	} from '@/api/public.js';
-	import a_seckill from './components/a_seckill';
-	import b_combination from './components/b_combination';
-	import c_bargain from './components/c_bargain';
-	import goodList from '@/components/goodList';
-	import promotionGood from '@/components/promotionGood';
 	import couponWindow from '@/components/couponWindow';
 	import ClipboardJS from "@/plugin/clipboard/clipboard.js";
 	import {
@@ -258,7 +140,6 @@
 	import {
 		mapGetters
 	} from "vuex";
-	import tabNav from '@/components/tabNav.vue'
 	import countDown from '@/components/countDown';
 	import {
 		getCategoryList,
@@ -266,13 +147,6 @@
 		getProductHot,
 		getGroomList
 	} from '@/api/store.js';
-	// import {
-	// 	setVisit
-	// } from '@/api/user.js'
-	import recommend from '@/components/recommend';
-	// #ifdef MP
-	import authorize from '@/components/Authorize';
-	// #endif
 	import {
 		silenceBindingSpread
 	} from '@/utils';
@@ -289,32 +163,16 @@
 	export default {
 		computed: mapGetters(['isLogin', 'uid']),
 		components: {
-			tabNav,
-			goodList,
-			promotionGood,
 			couponWindow,
 			countDown,
-			a_seckill,
-			b_combination,
-			c_bargain,
-			recommend,
-			// #ifdef MP
-			authorize,
-			// #endif
 			Loading
 		},
 		data() {
 			return {
-				loaded: false,
 				loading: false,
-				isAuto: false, //没有授权的不会自动授权
 				isShowAuth: false, //是否隐藏授权
 				statusBarHeight: statusBarHeight,
 				navIndex: 0,
-				navTop: [],
-				followUrl: "",
-				followHid: true,
-				followCode: false,
 				logoUrl: "",
 				imgUrls: [{
 					"name": "1",
@@ -338,7 +196,7 @@
 					"show": "1",
 					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/21c84909461c434a8ff39d467ba8d648prefpnpq15.png",
 					"id": 1233,
-					"url": "/pages/users/user_get_coupon/index"
+					"url": "/pages/users/user_vip/index"
 				}, {
 					"name": "拼桌活动",
 					"show": "2",
@@ -427,16 +285,11 @@
 					"nickName": "林路",
 					"age": "18"
 				}], //精品推荐临时数组
-				roll: [], // 新闻简报
 				site_name: '', //首页title
 				iSshowH: false,
 				configApi: {}, //分享类容配置
-				spikeList: [], // 秒杀
-				point: '',
-				privacyStatus: false, // 隐私政策是否同意过
 				tabsScrollLeft: 0, // tabs当前偏移量
 				scrollLeft: 0,
-				lineColor: 'red',
 				lineStyle: {}, // 下划线位置--动态甲酸
 				listActive: 0, // 当前选中项
 				duration: 0.2 // 下划线动画时长
@@ -596,7 +449,6 @@
 					that.$set(that, "site_name", '首页');
 					// that.$set(that, "imgUrls", res.data.banner);
 					// that.$set(that, "menus", res.data.menus);
-					that.$set(that, "roll", res.data.roll ? res.data.roll : []);
 					// #ifdef H5
 					that.$store.commit("SET_CHATURL", res.data.yzfUrl);
 					Cache.set('chatUrl', res.data.yzfUrl);
@@ -1114,10 +966,6 @@
 						color: #666666;
 					}
 				}
-			}
-
-			.tabNav {
-				padding-top: 24rpx;
 			}
 		}
 
