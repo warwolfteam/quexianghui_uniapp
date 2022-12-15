@@ -107,17 +107,14 @@
 		}, {
 			"path": "pages/index/components/b_combination",
 			"style": {}
+		}, {
+			"path": "pages/index/together",
+			"style": {
+				"navigationBarTitleText": "拼桌",
+				"enablePullDownRefresh": false
+			}
 		}
-	    ,{
-            "path" : "pages/index/together",
-            "style" :                                                                                    
-            {
-                "navigationBarTitleText": "拼桌",
-                "enablePullDownRefresh": false
-            }
-            
-        }
-    ],
+	],
 	"subPackages": [{
 		"root": "pages/users",
 		"name": "users",
@@ -449,6 +446,16 @@
 			}
 		}]
 	}],
+	"preloadRule": {
+		"pages/index/index": {
+			"network": "wifi",
+			"packages": ["pages/users", "pages/activity", "pages/columnGoods"]
+		},
+		"pages/index/together": {
+			"network": "wifi",
+			"packages": ["pages/together"]
+		}
+	},
 	"globalStyle": {
 		"navigationBarTextStyle": "black",
 		"navigationBarTitleText": "crmeb",
