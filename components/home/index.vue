@@ -1,19 +1,35 @@
 <template>
 	<view style="touch-action: none;">
-		<view class="home" style="position:fixed;" :style="{ top: top + 'px'}" id="right-nav" @touchmove.stop.prevent="setTouchMove">
-			<view class="homeCon bg-color-red" :class="homeActive === true ? 'on' : ''" v-if="homeActive">
-				<navigator hover-class='none' url='/pages/index/index' open-type='switchTab' class='iconfont icon-shouye-xianxing'></navigator>
-				<navigator hover-class='none' url='/pages/order_addcart/order_addcart' open-type='switchTab' class='iconfont icon-caigou-xianxing'></navigator>
-				<navigator hover-class='none' url='/pages/user/index' open-type='switchTab' class='iconfont icon-yonghu1'></navigator>
+		<view class="home"
+			style="position:fixed;"
+			:style="{ top: top + 'px'}"
+			id="right-nav"
+			@touchmove.stop.prevent="setTouchMove">
+			<view class="homeCon bg-color-red"
+				:class="homeActive === true ? 'on' : ''"
+				v-if="homeActive">
+				<navigator hover-class='none'
+					url='/pages/index/index'
+					open-type='switchTab'
+					class='iconfont icon-shouye-xianxing'></navigator>
+				<!-- <navigator hover-class='none'
+					url='/pages/order_addcart/order_addcart'
+					open-type='switchTab'
+					class='iconfont icon-caigou-xianxing'></navigator> -->
+				<navigator hover-class='none'
+					url='/pages/user/index'
+					open-type='switchTab'
+					class='iconfont icon-yonghu1'></navigator>
 			</view>
-			<view @click="open" class="pictrueBox">
+			<view @click="open"
+				class="pictrueBox">
 				<view class="pictrue">
 					<image :src="
               homeActive === true
                 ? '/static/images/close.gif'
                 : '/static/images/open.gif'
             "
-					 class="image" />
+						class="image" />
 				</view>
 			</view>
 		</view>
@@ -43,16 +59,12 @@
 				}
 			},
 			open: function() {
-				this.homeActive ?
-					this.$store.commit("CLOSE_HOME") :
-					this.$store.commit("OPEN_HOME");
+				this.homeActive ? this.$store.commit("CLOSE_HOME") : this.$store.commit("OPEN_HOME");
 			}
 		},
-		created() {
-		}
+		created() {}
 	};
 </script>
-
 <style scoped>
 	.pictrueBox {
 		width: 130rpx;

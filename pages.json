@@ -14,11 +14,6 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "pages/order_addcart/order_addcart",
-			"style": {
-				"navigationBarTitleText": "购物车"
-			}
-		}, {
 			"path": "pages/user/index",
 			"style": {
 				"navigationBarTitleText": "个人中心",
@@ -32,6 +27,11 @@
 			"path": "pages/goods_details/index",
 			"style": {
 				"navigationStyle": "custom"
+			}
+		}, {
+			"path": "pages/order_addcart/order_addcart",
+			"style": {
+				"navigationBarTitleText": "购物车"
 			}
 		}, {
 			"path": "pages/goods_cate/goods_cate",
