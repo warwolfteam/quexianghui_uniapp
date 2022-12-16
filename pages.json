@@ -458,6 +458,15 @@
 				"navigationBarTitleText": "购物车"
 			}
 		}]
+	}, {
+		"root": "pages/message",
+		"name": "message",
+		"pages": [{
+			"path": "message",
+			"style": {
+				"navigationBarTitleText": "消息中心"
+			}
+		}]
 	}],
 	"preloadRule": {
 		"pages/index/index": {
