@@ -29,11 +29,6 @@
 				"navigationStyle": "custom"
 			}
 		}, {
-			"path": "pages/order_addcart/order_addcart",
-			"style": {
-				"navigationBarTitleText": "购物车"
-			}
-		}, {
 			"path": "pages/goods_cate/goods_cate",
 			"style": {
 				"navigationBarTitleText": "商品分类"
@@ -452,6 +447,15 @@
 			"path": "user_detail/user_detail",
 			"style": {
 				"navigationBarTitleText": "会员资料"
+			}
+		}]
+	}, {
+		"root": "pages/order_addcart",
+		"name": "order_addcart",
+		"pages": [{
+			"path": "order_addcart",
+			"style": {
+				"navigationBarTitleText": "购物车"
 			}
 		}]
 	}],
