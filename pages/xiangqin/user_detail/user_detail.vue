@@ -121,7 +121,14 @@
 				diqu: "江西-赣州"
 			}
 		},
-		onLoad() {
+		onLoad: function(option) {
+			console.log("option0", option.id)
+			if (option.id !== undefined) {
+				console.log("option1", option.id);
+				this.jiesuoStatus = 0;
+			} else {
+				this.jiesuoStatus = 1;
+			}
 			if (!this.isLogin) {
 				toLogin();
 			} else {
