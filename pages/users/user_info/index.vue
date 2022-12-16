@@ -37,15 +37,17 @@
 							v-if="!userInfo.sex"> 点击选择性别 </view>
 						<view class="input"
 							@click="setSex"
-							v-else> {{sex}}
+							v-else> {{userInfo.sex}}
 						</view>
 					</view>
 					<view class='item acea-row row-between-wrapper'>
 						<view>年龄</view>
-						<view class='input'><input type='text'
-								placeholder="请输入年龄"
-								name='nickname'
-								:value='userInfo.age'></input>
+						<view class="input"
+							@click="setAge"
+							v-if="!userInfo.age"> 点击选择年龄 </view>
+						<view class="input"
+							@click="setAge"
+							v-else> {{userInfo.age}}
 						</view>
 					</view>
 					<view class='item acea-row row-between-wrapper relative'>
@@ -65,8 +67,8 @@
 					<view class='item acea-row row-between-wrapper'>
 						<view>微信号</view>
 						<view class='input'><input type='text'
-								name='nickname'
-								:value='userInfo.nickname'></input>
+								name='wechatId'
+								:value='userInfo.wechatId'></input>
 						</view>
 					</view>
 					<view class='item acea-row row-between-wrapper'>
@@ -116,6 +118,14 @@
 				<!-- #endif -->
 			</view>
 		</form>
+		<u-select v-model="showSetAge"
+			mode="single-column"
+			@confirm="confirmSetAge"
+			:list="ageList"></u-select>
+		<u-select v-model="showSetSex"
+			mode="single-column"
+			@confirm="confirmSetSex"
+			:list="sexList"></u-select>
 		<!-- #ifdef MP -->
 		<!-- <authorize @onLoadFun="onLoadFun" :isAuto="isAuto" :isShowAuth="isShowAuth" @authColse="authColse"></authorize> -->
 		<!-- #endif -->
@@ -150,7 +160,22 @@
 		},
 		data() {
 			return {
-				sex: "男",
+				showSetAge: false,
+				showSetSex: false,
+				ageList: [{
+					value: '1',
+					label: '江'
+				}, {
+					value: '2',
+					label: '湖'
+				}],
+				sexList: [{
+					value: '1',
+					label: '男'
+				}, {
+					value: '2',
+					label: '女'
+				}],
 				regionDval: ['浙江省', '杭州市', '滨江区'],
 				id: 0, //地址id
 				region: ['省', '市', '区'],
@@ -182,6 +207,7 @@
 			}
 		},
 		onLoad() {
+			console.log("userInfo", this.userInfo);
 			if (!this.isLogin) {
 				toLogin();
 			} else {
@@ -189,9 +215,25 @@
 			}
 		},
 		methods: {
+			// 点击选择年龄
+			setAge() {
+				console.log("点击选择年龄");
+				this.showSetAge = true;
+			},
+			confirmSetAge(e) {
+				console.log("点击选择年龄", e);
+				console.log("点击选择年龄", e[0].label);
+				this.userInfo.age = e[0].label
+			},
 			// 设置性别
 			setSex() {
-				console.log("设置性别");
+				console.log("点击选择性别");
+				this.showSetSex = true;
+			},
+			confirmSetSex(e) {
+				console.log("点击选择性别", e);
+				console.log("点击选择性别", e[0].label);
+				this.userInfo.sex = e[0].label
 			},
 			// 点击地区
 			// #ifdef APP-PLUS
@@ -358,12 +400,16 @@
 			 * 提交修改
 			 */
 			formSubmit: function(e) {
+				console.log("提交修改", e);
 				let that = this,
 					value = e.detail.value
 				if (!value.nickname) return that.$util.Tips({
 					title: '用户姓名不能为空'
 				});
 				value.avatar = that.newAvatar ? that.newAvatar : that.userInfo.avatar;
+				value.sex = that.userInfo.sex;
+				value.age = that.userInfo.age;
+				value.region = that.region;
 				userEdit(value).then(res => {
 					that.$store.commit("changInfo", {
 						amount1: 'avatar',
