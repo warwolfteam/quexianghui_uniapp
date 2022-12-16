@@ -445,6 +445,15 @@
 				"navigationBarTitleText": "拼桌商城"
 			}
 		}]
+	}, {
+		"root": "pages/xiangqin",
+		"name": "xiangqin",
+		"pages": [{
+			"path": "user_detail/user_detail",
+			"style": {
+				"navigationBarTitleText": "会员资料"
+			}
+		}]
 	}],
 	"preloadRule": {
 		"pages/index/index": {
