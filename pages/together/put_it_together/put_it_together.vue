@@ -265,7 +265,9 @@
 		mounted() {
 			this.setTabList()
 		},
-		onLoad() {
+		onLoad(option) {
+			console.log("option:", option);
+			this.searchValue = option.searchValue;
 			var that = this;
 			// 获取系统信息
 			uni.getSystemInfo({
