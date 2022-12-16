@@ -162,13 +162,7 @@
 			return {
 				showSetAge: false,
 				showSetSex: false,
-				ageList: [{
-					value: '1',
-					label: '江'
-				}, {
-					value: '2',
-					label: '湖'
-				}],
+				ageList: [],
 				sexList: [{
 					value: '1',
 					label: '男'
@@ -207,14 +201,28 @@
 			}
 		},
 		onLoad() {
-			console.log("userInfo", this.userInfo);
 			if (!this.isLogin) {
 				toLogin();
 			} else {
+				this.setAgeList();
 				this.getCityList();
+				console.log("userInfo", this.userInfo);
 			}
 		},
 		methods: {
+			setAgeList() {
+				console.log("初始ageList：", this.ageList);
+				var arr = [];
+				for (var i = 18; i < 200; i++) {
+					arr.push({
+						label: i + "岁",
+						value: i
+					})
+				}
+				console.log("造arr：", arr);
+				this.ageList = arr;
+				console.log("ageList生成完毕：", this.ageList);
+			},
 			// 点击选择年龄
 			setAge() {
 				console.log("点击选择年龄");
