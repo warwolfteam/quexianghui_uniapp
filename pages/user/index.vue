@@ -183,11 +183,11 @@
 					"id": 1242,
 					"url": "/pages/users/user_address_list/index"
 				}, {
-					"wap_url": "/pages/users/user_info/index",
-					"name": "我的账户",
+					"wap_url": "/pages/xiangqin/user_detail/user_detail",
+					"name": "我的资料",
 					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/11113e1876ac427bb3173086a3bd6c5bhyan1ea9pz.png",
 					"id": 1244,
-					"url": "/pages/users/user_info/index"
+					"url": "/pages/xiangqin/user_detail/user_detail"
 				}, {
 					"wap_url": "/pages/users/user_goods_collection/index",
 					"name": "身份认证",
