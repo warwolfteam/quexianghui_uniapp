@@ -67,6 +67,7 @@
 					<view class='item acea-row row-between-wrapper'>
 						<view>微信号</view>
 						<view class='input'><input type='text'
+								placeholder="请输入微信号"
 								name='wechatId'
 								:value='userInfo.wechatId'></input>
 						</view>
