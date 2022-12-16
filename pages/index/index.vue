@@ -78,6 +78,12 @@
 					</block>
 				</view>
 				<!-- 首发新品 -->
+				<view class='navtab'>
+					<u-tabs :list="tabList"
+						:is-scroll="false"
+						:current="current"
+						@change="change"></u-tabs>
+				</view>
 				<view class="index-product-wrapper"
 					:class="iSshowH?'on':''">
 					<view class="list-box animated"
@@ -169,6 +175,14 @@
 		},
 		data() {
 			return {
+				tabList: [{
+					name: '全部'
+				}, {
+					name: '只看男生'
+				}, {
+					name: '只看女生'
+				}],
+				current: 0,
 				loading: false,
 				isShowAuth: false, //是否隐藏授权
 				statusBarHeight: statusBarHeight,
@@ -202,7 +216,7 @@
 					"show": "2",
 					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/9ac69cbe9da4459db264b1902ff6f693spomyy6lkw.png",
 					"id": 1228,
-					"url": "/pages/activity/goods_combination/index"
+					"url": "/pages/together/put_it_together/put_it_together"
 				}, {
 					"name": "求婚表白",
 					"show": "3",
@@ -354,6 +368,10 @@
 			})
 		},
 		methods: {
+			change(e) {
+				console.log("切换之后", e);
+				this.current = e
+			},
 			getCoupon: function(id, index) {
 				let that = this;
 				//领取优惠券
@@ -1041,6 +1059,14 @@
 					height: 280rpx;
 					border-radius: 10rpx;
 				}
+			}
+
+			.navtab {
+				background: #fff;
+				opacity: 1;
+				border-radius: 14rpx;
+				width: 100%;
+				margin-bottom: 30rpx;
 			}
 
 			.nav {
