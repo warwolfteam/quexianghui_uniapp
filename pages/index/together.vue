@@ -53,7 +53,7 @@
 										color="#000000"
 										size="48"></u-icon>
 								</view>
-								<view class="tex"> 发布 <view class="miaoshu">线下社交活动</view>
+								<view class="tex"> 发布活动 <view class="miaoshu">线下社交活动</view>
 								</view>
 							</view>
 							<view class="huodong"
