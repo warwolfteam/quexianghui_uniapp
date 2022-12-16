@@ -9,28 +9,52 @@
 					:src="userInfo.avatar"></u-image>
 			</view>
 		</view>
+		<view class="simi_body">
+			<view class="nobuy"
+				v-if="jiesuoStatus==0">
+				<view class="nobuy_detail detail_blur">
+					<view class="nobuy_list">
+						<view class="jiamitex">
+							<view>联系方式: </view>
+							<view class="jiami"> （信息已保密）</view>
+						</view>
+						<view class="jiamitex">手机号码：*** **** ****</view>
+					</view>
+					<view class="anniu"> 您还未解锁该联系方式！ </view>
+					<u-button :custom-style="customStyle"
+						@click="jiesuoziliao()"
+						size="medium">立即解锁</u-button>
+				</view>
+			</view>
+			<view class="buy"
+				v-else>
+				<u-cell-group title="联系方式">
+					<u-cell-item title="微信号"
+						:arrow="false"
+						value="123456"></u-cell-item>
+					<u-cell-item title="手机号"
+						:arrow="false"
+						value="13256458965"></u-cell-item>
+				</u-cell-group>
+			</view>
+		</view>
 		<view class="my_body">
-			<u-cell-group title="个人信息">
+			<u-cell-group title="用户信息">
 				<u-cell-item title="昵称"
+					:arrow="false"
 					value="妙儿"></u-cell-item>
 				<u-cell-item title="性别"
+					:arrow="false"
 					value="男"></u-cell-item>
 				<u-cell-item title="区域"
+					:arrow="false"
 					value="冰岛"></u-cell-item>
 				<u-cell-item title="年龄"
+					:arrow="false"
 					value="8"></u-cell-item>
 			</u-cell-group>
 		</view>
-		<view class="simi_body">
-			<u-cell-group title="联系方式">
-				<u-cell-item title="微信号"
-					value="123456"></u-cell-item>
-				<u-cell-item title="手机号"
-					value="13256458965"></u-cell-item>
-			</u-cell-group>
-		</view>
 		<view class="zhanwei">
-			
 		</view>
 	</view>
 </template>
@@ -63,6 +87,11 @@
 		},
 		data() {
 			return {
+				jiesuoStatus: 0,
+				customStyle: {
+					marginTop: '-20rpx', // 注意驼峰命名，并且值必须用引号包括，因为这是对象
+					color: '#ff0053'
+				},
 				showSetAge: false,
 				showSetSex: false,
 				ageList: [],
@@ -99,7 +128,12 @@
 				console.log("userInfo", this.userInfo);
 			}
 		},
-		methods: {}
+		methods: {
+			jiesuoziliao() {
+				console.log("点击解锁资料");
+				this.jiesuoStatus = 1;
+			}
+		}
 	}
 </script>
 <style scoped
@@ -134,8 +168,54 @@
 			border-radius: 30rpx;
 			text-align: center;
 			background: #ffffff;
+
+			.nobuy {
+				width: 100%;
+
+				.nobuy_detail {
+					border-radius: 10rpx;
+					padding: 50rpx;
+					position: relative;
+					border: rgba(255, 102, 138, .08) 1px solid;
+					background-color: rgba(255, 102, 138, .02);
+
+					.nobuy_list {
+						line-height: 3rem;
+						font-size: 13rpx;
+
+						.jiamitex {
+							display: flex;
+							font-size: 13rpx;
+
+							.jiami {
+								color: #FD9F23;
+								font-size: 26rpx;
+							}
+						}
+					}
+
+					.anniu {
+						width: 100%;
+						position: absolute;
+						top: 0;
+						left: 0;
+						line-height: 230rpx;
+						height: 170rpx;
+						z-index: 1;
+						text-align: center;
+					}
+				}
+
+				.detail_blur .nobuy_list {
+					filter: blur(.4rem);
+					filter: alpha(opacity=50);
+					-moz-opacity: 0.5;
+					opacity: 0.5
+				}
+			}
 		}
-		.zhanwei{
+
+		.zhanwei {
 			height: 100rpx;
 		}
 	}
