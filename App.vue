@@ -176,6 +176,11 @@
 	@import 'static/iconfont/iconfont.css';
 	@import 'static/css/guildford.css';
 	@import 'static/css/style.scss';
+	
+	@import "colorui/main.css";
+	@import "colorui/icon.css";
+	@import "colorui/common.scss";
+	
 
 	/* 条件编译，仅在H5平台生效 */
 	// #ifdef H5
