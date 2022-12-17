@@ -120,8 +120,10 @@
 			},
 			sureSubmit() {
 				this.isSure = false
-				this.$loading('实名认证中...')
-				this.$base.tips('实名认证成功！', 'success', false)
+				uni.showToast({
+					title: '实名认证成功！',
+					duration: 2000
+				});
 				this.isOk = true
 				// RealAuthentication(this.formData).then(res => {
 				// 	this.$base.tips('实名认证成功！', 'success', false)

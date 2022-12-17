@@ -1,77 +1,87 @@
 <template>
 	<view>
-		<view v-if="isShow" class="">
-			<u-popup :show="isShow" @close="isShow = false" @open="isShow = true" mode="center"
-				border-radius="30" :closeOnClickOverlay="closeOnClickOverlay"> 
-				<view class="bg_color_fff paddding border_radius_30" style="width: 600rpx;">
+		<view v-if="isShow"
+			class="">
+			<u-popup v-model="isShow"
+				@close="isShow = false"
+				@open="isShow = true"
+				mode="center"
+				border-radius="30"
+				:closeOnClickOverlay="closeOnClickOverlay">
+				<view class="bg_color_fff paddding border_radius_30"
+					style="width: 600rpx;">
 					<view class="color_000 fontS26 bold mar_top40 text-center">温馨提示</view>
-					<view class="fontS32 bold mar_top70 text-center" :style="{color:color}">{{content}}</view>
-					<view @click="sureClick" class="bgColorjb border_radius_20 sure_btn">{{confirmText}}</view>
+					<view class="fontS32 bold mar_top70 text-center"
+						:style="{color:color}">{{content}}</view>
+					<view @click="sureClick"
+						class="bgColorjb border_radius_20 sure_btn">{{confirmText}}</view>
 				</view>
-				<view class=" bold fontS32 mar_top30" style="color: #000;text-align: center;">
-					<view class="flex align-center justify-center" @click="close">
-						<u-icon :name="`/static/img/close_p.png`" size="30"></u-icon>
+				<view class=" bold fontS32 mar_top30"
+					style="color: #000;text-align: center;">
+					<view class="flex align-center justify-center"
+						@click="close">
+						<u-icon :name="`/static/img/close_p.png`"
+							size="30"></u-icon>
 					</view>
 				</view>
 			</u-popup>
 		</view>
 	</view>
 </template>
-
 <script>
 	export default {
 		name: "z-model",
-		props:{  
-			confirmText:{
-				type:String,
-				default:'确定'
+		props: {
+			confirmText: {
+				type: String,
+				default: '确定'
 			},
-			closeOnClickOverlay:{
-				type:Boolean,
-				default:false
+			closeOnClickOverlay: {
+				type: Boolean,
+				default: false
 			},
-			content:{
-				type:String,
-				default:''
+			content: {
+				type: String,
+				default: ''
 			},
-			color:{
-				type:String,
-				default:'#000'
+			color: {
+				type: String,
+				default: '#000'
 			},
-			pageObj:{
-				type:Object,
-				default:() => {
+			pageObj: {
+				type: Object,
+				default: () => {
 					return {}
 				}
 			},
-			show:{
-				type:Boolean,
-				default:false
+			show: {
+				type: Boolean,
+				default: false
 			}
 		},
-		watch:{
-			show(value){
+		watch: {
+			show(value) {
 				this.isShow = value
 			}
 		},
 		data() {
 			return {
-				isShow:this.show
+				isShow: this.show
 			};
 		},
-		methods:{
-			sureClick(){
+		methods: {
+			sureClick() {
 				this.$emit('click')
 			},
-			close(){
+			close() {
 				// this.show = false
-				 this.$emit('close', false); 
+				this.$emit('close', false);
 			}
 		}
 	}
 </script>
-
-<style scoped lang="scss">
+<style scoped
+	lang="scss">
 	.sure_btn {
 		width: 320rpx;
 		height: 80rpx;
