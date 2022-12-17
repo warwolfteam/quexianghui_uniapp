@@ -439,6 +439,12 @@
 			"style": {
 				"navigationBarTitleText": "拼桌商城"
 			}
+		}, {
+			"path": "together_detail/together_detail",
+			"style": {
+				"navigationBarTitleText": "拼桌活动详情",
+				"enablePullDownRefresh": false
+			}
 		}]
 	}, {
 		"root": "pages/xiangqin",

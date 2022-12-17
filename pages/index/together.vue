@@ -77,7 +77,7 @@
 						<view class="item"
 							v-for="(item,index) in tempArr"
 							:key="index"
-							@click="goDetail(item)">
+							@click="toTogetherDetail(item)">
 							<view class="pictrue">
 								<image :src="item.image"
 									mode=""></image>
@@ -90,6 +90,7 @@
 								<view class="title line2"> 备注：跟所有的烦恼说拜拜，跟所有的快乐say hihi </view>
 								<view class="botton">
 									<u-button type="error"
+										@click="toTogetherDetail(item)"
 										size="mini"
 										:plain="true"
 										shape="circle">立即拼桌</u-button>
@@ -340,6 +341,13 @@
 			let self = this
 		},
 		methods: {
+			toTogetherDetail(e) {
+				console.log("去拼桌详情页", e);
+				uni.navigateTo({
+					url: '/pages/together/together_detail/together_detail?item=' + encodeURIComponent(JSON
+						.stringify(e))
+				})
+			},
 			getCoupon: function(id, index) {
 				let that = this;
 				//领取优惠券
