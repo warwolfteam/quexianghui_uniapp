@@ -53,6 +53,7 @@
 			</view>
 		</view>
 		<z-model :show="isSure"
+			:pageObj="this"
 			@close="isSure = false"
 			content="确认提交吗？"
 			@click="sureSubmit"></z-model>
@@ -87,7 +88,6 @@
 			this.isOk = false
 		},
 		methods: {
-			
 			submit() {
 				console.log("pageObj = this-- formData", this.formData);
 				if (!this.formData.user_name) {

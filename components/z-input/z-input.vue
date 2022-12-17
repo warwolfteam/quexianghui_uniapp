@@ -128,6 +128,8 @@
 			},
 			blur(event) {
 				let value = event.detail.value
+				console.log("event:", event);
+				console.log("value:", value);
 				this.$emit('blur', value)
 			}
 		}
