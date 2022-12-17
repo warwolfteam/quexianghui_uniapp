@@ -26,11 +26,15 @@
 					<view class="color_828282 fontS26 bold mar_top60">真实姓名</view>
 					<z-input maxlength="16"
 						v-model="formData.user_name"
+						@methods-blur="setUserName"
+						@handlerValueChange="setUserName"
 						textAlign="left"
 						placeholder="请输入真实姓名"
 						border="1px solid #E0E0E0"></z-input>
 					<view class="color_828282 fontS26 bold mar_top30">身份证号</view>
 					<z-input v-model="formData.id_num"
+						@methods-blur="setIdNum"
+						@handlerValueChange="setIdNum"
 						maxlength="18"
 						textAlign="left"
 						placeholder="请输入18位身份证号"
@@ -88,8 +92,15 @@
 			this.isOk = false
 		},
 		methods: {
+			setUserName(e) {
+				console.log("setUserName", e);
+				this.formData.user_name = e;
+			},
+			setIdNum(e) {
+				console.log("setIdNum", e);
+				this.formData.id_num = e;
+			},
 			submit() {
-				console.log("pageObj = this-- formData", this.formData);
 				if (!this.formData.user_name) {
 					uni.showToast({
 						title: '请输入真实姓名',
@@ -103,6 +114,7 @@
 					});
 				} else {
 					this.isSure = true;
+					console.log("pageObj = this", this);
 					console.log("this.isSure :", this.isSure);
 				}
 			},

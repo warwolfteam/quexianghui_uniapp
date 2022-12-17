@@ -116,6 +116,7 @@
 				set: function(val) {
 					//侦听到setter()事件，将值传递回父级组件
 					this.$emit('handlerValueChange', val);
+					// console.log("handlerValueChange:", val);
 				}
 			}
 		},
@@ -128,9 +129,9 @@
 			},
 			blur(event) {
 				let value = event.detail.value
-				console.log("event:", event);
-				console.log("value:", value);
-				this.$emit('blur', value)
+				// console.log("event:", event);
+				// console.log("value:", value);
+				this.$emit('methods-blur', value)
 			}
 		}
 	}
