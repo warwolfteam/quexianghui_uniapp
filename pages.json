@@ -473,6 +473,15 @@
 				"navigationBarTitleText": "消息中心"
 			}
 		}]
+	}, {
+		"root": "pages/RealNameAuthent",
+		"name": "RealNameAuthent",
+		"pages": [{
+			"path": "RealNameAuthent",
+			"style": {
+				"navigationBarTitleText": "实名认证"
+			}
+		}]
 	}],
 	"preloadRule": {
 		"pages/index/index": {

@@ -195,11 +195,11 @@
 					"id": 1244,
 					"url": "/pages/users/user_goods_collection/index"
 				}, {
-					"wap_url": "/pages/users/user_goods_collection/index",
+					"wap_url": "/pages/RealNameAuthent/RealNameAuthent",
 					"name": "身份认证",
 					"pic": "https://api.centosxyc1.qqfrp.heimaoba.cn/crmebimage/public/maintain/2021/12/25/11113e1876ac427bb3173086a3bd6c5bhyan1ea9pz.png",
 					"id": 1244,
-					"url": "/pages/users/user_goods_collection/index"
+					"url": "/pages/RealNameAuthent/RealNameAuthent"
 				}, {
 					"wap_url": "/pages/users/user_address_list/index",
 					"name": "申请商家",
