@@ -2,16 +2,12 @@
 	<view class="user_detail">
 		<view class="user_detail_head">
 			<view class="header_box">
-				<u-image width="100%"
-					height="600rpx"
-					border-radius="30rpx"
-					mode="aspectFit"
-					:src="userInfo.avatar"></u-image>
+				<u-image width="100%" height="600rpx" border-radius="30rpx" mode="aspectFit" :src="headImg">
+				</u-image>
 			</view>
 		</view>
 		<view class="simi_body">
-			<view class="nobuy"
-				v-if="jiesuoStatus==0">
+			<view class="nobuy" v-if="jiesuoStatus==0">
 				<view class="nobuy_detail detail_blur">
 					<view class="nobuy_list">
 						<view class="jiamitex">
@@ -21,37 +17,22 @@
 						<view class="jiamitex">手机号码：*** **** ****</view>
 					</view>
 					<view class="anniu"> 您还未解锁该联系方式！ </view>
-					<u-button :custom-style="customStyle"
-						@click="jiesuoziliao()"
-						size="medium">立即解锁</u-button>
+					<u-button :custom-style="customStyle" @click="jiesuoziliao()" size="medium">立即解锁</u-button>
 				</view>
 			</view>
-			<view class="buy"
-				v-else>
+			<view class="buy" v-else>
 				<u-cell-group title="联系方式">
-					<u-cell-item title="微信号"
-						:arrow="false"
-						value="123456"></u-cell-item>
-					<u-cell-item title="手机号"
-						:arrow="false"
-						value="13256458965"></u-cell-item>
+					<u-cell-item title="微信号" :arrow="false" value="123456"></u-cell-item>
+					<u-cell-item title="手机号" :arrow="false" value="13256458965"></u-cell-item>
 				</u-cell-group>
 			</view>
 		</view>
 		<view class="my_body">
 			<u-cell-group title="用户信息">
-				<u-cell-item title="昵称"
-					:arrow="false"
-					value="妙儿"></u-cell-item>
-				<u-cell-item title="性别"
-					:arrow="false"
-					value="男"></u-cell-item>
-				<u-cell-item title="区域"
-					:arrow="false"
-					value="冰岛"></u-cell-item>
-				<u-cell-item title="年龄"
-					:arrow="false"
-					value="8"></u-cell-item>
+				<u-cell-item title="昵称" :arrow="false" :value="nickName"></u-cell-item>
+				<u-cell-item title="性别" :arrow="false" :value="sex"></u-cell-item>
+				<u-cell-item title="区域" :arrow="false" :value="city"></u-cell-item>
+				<u-cell-item title="年龄" :arrow="false" :value="age"></u-cell-item>
 			</u-cell-group>
 		</view>
 		<view class="zhanwei">
@@ -87,6 +68,11 @@
 		},
 		data() {
 			return {
+				headImg: "",
+				nickName: "妙儿",
+				sex: "男",
+				city: "冰岛",
+				age: "8",
 				jiesuoStatus: 0,
 				customStyle: {
 					marginTop: '-20rpx', // 注意驼峰命名，并且值必须用引号包括，因为这是对象
@@ -123,16 +109,35 @@
 		},
 		onLoad: function(option) {
 			console.log("option0", option.id)
-			if (option.id !== undefined) {
-				console.log("option1", option.id);
-				this.jiesuoStatus = 0;
-			} else {
-				this.jiesuoStatus = 1;
-			}
+			console.log("option-item", option.item)
+
 			if (!this.isLogin) {
 				toLogin();
-			} else {
+			}
+			if (this.isLogin) {
 				console.log("userInfo", this.userInfo);
+				if (option.id === undefined) {
+					console.log("option2", option.id);
+					this.headImg = this.userInfo.avatar;
+					this.jiesuoStatus = 1;
+					if (option.item !== undefined) {
+						var item = JSON.parse(decodeURIComponent(option.item));
+						console.log("item", item);
+						this.headImg = item.image;
+						this.nickName = item.nickName;
+						this.age = item.age;
+						this.sex = "女";
+
+						this.jiesuoStatus = 0;
+					}
+					if (option.item === undefined) {
+						console.log("option.item", option.item);
+					}
+				}
+				if (option.id !== undefined) {
+					console.log("option1", option.id);
+
+				}
 			}
 		},
 		methods: {
@@ -143,8 +148,7 @@
 		}
 	}
 </script>
-<style scoped
-	lang="scss">
+<style scoped lang="scss">
 	.user_detail {
 		background-color: #f5f5f5;
 		width: 100%;

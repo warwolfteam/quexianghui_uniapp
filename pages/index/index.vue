@@ -568,7 +568,7 @@
 				} else {
 					goShopDetail(item, this.uid).then(res => {
 						uni.navigateTo({
-							url: `/pages/xiangqin/user_detail/user_detail?id=${item.id}`
+							url: `/pages/xiangqin/user_detail/user_detail?item=` + encodeURIComponent(JSON.stringify(item))
 						})
 					})
 				}
