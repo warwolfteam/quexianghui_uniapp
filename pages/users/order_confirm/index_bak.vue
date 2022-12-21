@@ -1,37 +1,30 @@
 <template>
 	<view>
-		<u-tabs :list="tabList"
-			:is-scroll="false"
-			:current="current"
-			@change="change"></u-tabs>
 		<view class='order-submission'>
-			<view class="allAddress"
-				:style="store_self_mention ? '':'padding-top:10rpx;'">
-				<view class='address acea-row row-between-wrapper'
-					@tap='onAddress'
-					v-if='current == 0'
-					:style="store_self_mention ? '':'border-top-left-radius: 14rpx;border-top-right-radius: 14rpx;'">
-					<view class='addressCon'
-						v-if="addressInfo.realName">
+			<view class="allAddress" :style="store_self_mention ? '':'padding-top:10rpx;'">
+				<view class="nav acea-row">
+					<view class="item font-color" :class="shippingType == 0 ? 'on' : 'on2'" @tap="addressType(0)"
+						v-if='store_self_mention'></view>
+					<view class="item font-color" :class="shippingType == 1 ? 'on' : 'on2'" @tap="addressType(1)"
+						v-if='store_self_mention'></view>
+				</view>
+				<view class='address acea-row row-between-wrapper' @tap='onAddress' v-if='shippingType == 0' :style="store_self_mention ? '':'border-top-left-radius: 14rpx;border-top-right-radius: 14rpx;'">
+					<view class='addressCon' v-if="addressInfo.realName">
 						<view class='name'>{{addressInfo.realName}}
 							<text class='phone'>{{addressInfo.phone}}</text>
 						</view>
 						<view class="acea-row">
 							<text class='default font-color'
 								v-if="addressInfo.isDefault">[默认]</text>
-							<text
-								class="line2">{{addressInfo.province}}{{addressInfo.city}}{{addressInfo.district}}{{addressInfo.detail}}</text>
+							<text class="line2">{{addressInfo.province}}{{addressInfo.city}}{{addressInfo.district}}{{addressInfo.detail}}</text>	
 						</view>
 					</view>
-					<view class='addressCon'
-						v-else>
+					<view class='addressCon' v-else>
 						<view class='setaddress'>设置收货地址</view>
 					</view>
 					<view class='iconfont icon-jiantou'></view>
 				</view>
-				<view class='address acea-row row-between-wrapper'
-					v-if='current == 1'
-					@tap="showStoreList">
+				<view class='address acea-row row-between-wrapper' v-else @tap="showStoreList">
 					<block v-if="storeList.length>0">
 						<view class='addressCon'>
 							<view class='name'>{{system_store.name}}
@@ -43,7 +36,7 @@
 						<view class='iconfont icon-jiantou'></view>
 					</block>
 					<block v-else>
-						<view>门店信息 江西省赣州市章贡区万象城7楼</view>
+						<view>暂无门店信息</view>
 					</block>
 				</view>
 				<view class='line'>
@@ -51,49 +44,73 @@
 				</view>
 			</view>
 			<view class="pad30">
-				<orderGoods :cartInfo="cartInfo"
-					:orderProNum="orderProNum"></orderGoods>
+				<orderGoods :cartInfo="cartInfo" :orderProNum="orderProNum"></orderGoods>
 				<view class='wrapper borRadius14'>
-					<view v-if='current == 1'>
+					<view class='item acea-row row-between-wrapper' @tap='couponTap'
+						v-if="!orderInfoVo.bargainId && !orderInfoVo.combinationId && !orderInfoVo.seckillId && productType==='normal'">
+						<view>优惠券</view>
+						<view class='discount'>{{couponTitle}}
+							<text class='iconfont icon-jiantou'></text>
+						</view>
+					</view>
+					
+					<view class='item acea-row row-between-wrapper'
+						v-if="!orderInfoVo.bargainId && !orderInfoVo.combinationId && !orderInfoVo.seckillId && productType==='normal'">
+						<view>积分抵扣</view>
+					<!-- 	 -->
+						<view class='discount acea-row row-middle'>
+							<view> {{useIntegral ? "剩余积分":"当前积分"}}
+								<text class='num font-color'>{{useIntegral ? orderInfoVo.surplusIntegral : orderInfoVo.userIntegral || 0}}</text>
+							</view>
+							<checkbox-group @change="ChangeIntegral">
+								<checkbox :checked='useIntegral ? true : false' :disabled="orderInfoVo.userIntegral==0 && !useIntegral"/>
+							</checkbox-group>
+						</view>
+					</view>
+					<!-- <view class='item acea-row row-between-wrapper'
+						v-if="priceGroup.vipPrice > 0 && userInfo.vip && !pinkId && !BargainId && !combinationId && !seckillId">
+						<view>会员优惠</view>
+						<view class='discount'>-￥{{priceGroup.vipPrice}}</view>
+					</view> -->
+					<view class='item acea-row row-between-wrapper' v-if='shippingType==0'>
+						<view>快递费用</view>
+						<view class='discount' v-if='parseFloat(orderInfoVo.freightFee) > 0'>
+							+￥{{orderInfoVo.freightFee}}
+						</view>
+						<view class='discount' v-else>免运费</view>
+					</view>
+					<view v-else>
 						<view class="item acea-row row-between-wrapper">
 							<view>联系人</view>
 							<view class="discount textR">
-								<input type="text"
-									placeholder="请填写您的联系姓名"
-									placeholder-style="color:#ccc;"
-									placeholder-class="placeholder"
+								<input type="text" placeholder="请填写您的联系姓名" placeholder-style="color:#ccc;" placeholder-class="placeholder"
 									@blur='realName'></input>
 							</view>
 						</view>
 						<view class="item acea-row row-between-wrapper">
 							<view>联系电话</view>
 							<view class="discount textR">
-								<input type="text"
-									placeholder="请填写您的联系电话"
-									placeholder-style="color:#ccc;"
-									placeholder-class="placeholder"
+								<input type="text" placeholder="请填写您的联系电话"  placeholder-style="color:#ccc;" placeholder-class="placeholder"
 									@blur='phone'></input>
 							</view>
 						</view>
 					</view>
-					<view class='item'>
+					<!-- <view class='item acea-row row-between-wrapper' wx:else>
+		      <view>自提门店</view>
+		      <view class='discount'>{{system_store.name}}</view>
+		    </view> -->
+					<view class='item' v-if="textareaStatus">
 						<view>备注信息</view>
-						<textarea placeholder-class='placeholder'
-							@input='bindHideKeyboard'
-							value=""
-							name="mark"
-							placeholder='请添加备注（150字以内）'></textarea>
+						<textarea v-if="coupon.coupon===false" placeholder-class='placeholder' @input='bindHideKeyboard'
+							value="" name="mark" placeholder='请添加备注（150字以内）'></textarea>
 					</view>
 				</view>
 				<view class='wrapper borRadius14'>
 					<view class='item'>
 						<view>支付方式</view>
 						<view class='list'>
-							<view class='payItem acea-row row-middle'
-								:class='active==index ?"on":""'
-								@tap='payItem(index)'
-								v-for="(item,index) in cartArr"
-								:key='index'
+							<view class='payItem acea-row row-middle' :class='active==index ?"on":""'
+								@tap='payItem(index)' v-for="(item,index) in cartArr" :key='index'
 								v-if="item.payStatus==1">
 								<view class='name acea-row row-center-wrapper'>
 									<view class='iconfont animated'
@@ -111,13 +128,15 @@
 						<view>商品总价：</view>
 						<view class='money'>￥{{orderInfoVo.proTotalFee || 0}}</view>
 					</view>
-					<view class='item acea-row row-between-wrapper'
-						v-if="orderInfoVo.deductionPrice > 0">
+					<view class='item acea-row row-between-wrapper' v-if="orderInfoVo.couponFee > 0">
+						<view>优惠券抵扣：</view>
+						<view class='money'>-￥{{orderInfoVo.couponFee}}</view>
+					</view>
+					<view class='item acea-row row-between-wrapper' v-if="orderInfoVo.deductionPrice > 0">
 						<view>积分抵扣：</view>
 						<view class='money'>-￥{{orderInfoVo.deductionPrice}}</view>
 					</view>
-					<view class='item acea-row row-between-wrapper'
-						v-if="orderInfoVo.freightFee > 0">
+					<view class='item acea-row row-between-wrapper' v-if="orderInfoVo.freightFee > 0">
 						<view>运费：</view>
 						<view class='money'>+￥{{orderInfoVo.freightFee}}</view>
 					</view>
@@ -125,25 +144,25 @@
 				<view style='height:120rpx;'></view>
 			</view>
 			<view class='footer acea-row row-between-wrapper'>
-				<view>合计: <text class='font-color'>￥{{orderInfoVo.payFee || 0}}</text>
+				<view>合计:
+					<text class='font-color'>￥{{orderInfoVo.payFee || 0}}</text>
 				</view>
-				<view class='settlement'
-					style='z-index:100'
-					@tap="SubOrder">立即结算</view>
+				<view class='settlement' style='z-index:100' @tap="SubOrder">立即结算</view>
 			</view>
 		</view>
-		<addressWindow ref="addressWindow"
-			@changeTextareaStatus="changeTextareaStatus"
-			:address='address'
-			:pagesUrl="pagesUrl"
-			@OnDefaultAddress="OnDefaultAddress"
-			@OnChangeAddress="OnChangeAddress"
-			@changeClose="changeClose"></addressWindow>
+		<couponListWindow :coupon='coupon' @ChangCouponsClone="ChangCouponsClone" :openType='openType' @ChangCoupons="ChangCoupons" :orderShow="orderShow"></couponListWindow>
+		<addressWindow ref="addressWindow" @changeTextareaStatus="changeTextareaStatus" :address='address'
+			:pagesUrl="pagesUrl" @OnDefaultAddress="OnDefaultAddress"  @OnChangeAddress="OnChangeAddress" @changeClose="changeClose"></addressWindow>
+		<!-- #ifdef MP -->
+		<!-- <authorize @onLoadFun="onLoadFun" :isAuto="isAuto" :isShowAuth="isShowAuth" @authColse="authColse"></authorize> -->
+		<!-- #endif -->
 		<home></home>
 	</view>
 </template>
 <script>
 	import {
+		//orderConfirm,
+		getCouponsOrderPrice,
 		orderCreate,
 		postOrderComputed,
 		wechatOrderPay,
@@ -179,6 +198,7 @@
 	// #endif
 	export default {
 		components: {
+			couponListWindow,
 			addressWindow,
 			orderGoods,
 			home,
@@ -192,21 +212,35 @@
 				textareaStatus: true,
 				//支付方式
 				cartArr: [{
-					"name": "微信支付",
-					"icon": "icon-weixin2",
-					value: 'weixin',
-					title: '微信快捷支付',
-					payStatus: 1,
-				}, {
-					"name": "余额支付",
-					"icon": "icon-icon-test",
-					value: 'yue',
-					title: '可用余额:',
-					payStatus: 1,
-				}],
+						"name": "微信支付",
+						"icon": "icon-weixin2",
+						value: 'weixin',
+						title: '微信快捷支付',
+						payStatus: 1,
+					},
+					{
+						"name": "余额支付",
+						"icon": "icon-icon-test",
+						value: 'yue',
+						title: '可用余额:',
+						payStatus: 1,
+					}
+					// {
+					// 	"name": "线下支付", //offlinePayStatu：1开启线下支付；2关闭；offlinePostage：true有邮费
+					// 	"icon": "icon-yinhangqia",
+					// 	value: 'offline',
+					// 	title: '线下支付',
+					// 	payStatus: 1,
+					// },
+				],
 				payType: 'weixin', //支付方式
 				openType: 1, //优惠券打开方式 1=使用
 				active: 0, //支付方式切换
+				coupon: {
+					coupon: false,
+					list: [],
+					statusTile: '立即使用'
+				}, //优惠券组件
 				address: {
 					address: false,
 					addressId: 0
@@ -256,15 +290,7 @@
 				orderInfoVo: {},
 				addressList: [], //地址列表数据
 				orderProNum: 0,
-				preOrderNo: '', //预下单订单号
-				tabList: [{
-					name: '快递配送'
-				}, {
-					name: '普通购买'
-				}, {
-					name: '拼桌购买'
-				}],
-				current: 0,
+				preOrderNo: '' //预下单订单号
 			};
 		},
 		computed: mapGetters(['isLogin', 'systemPlatform', 'productType']),
@@ -273,6 +299,7 @@
 				handler: function(newV, oldV) {
 					if (newV) {
 						this.getloadPreOrder();
+						//this.getaddressInfo();
 					}
 				},
 				deep: true
@@ -285,7 +312,13 @@
 			// #ifdef MP
 			this.payChannel = 'routine';
 			// #endif
-			this.preOrderNo = options.preOrderNo || 0;
+			// if (!options.cartId) return this.$util.Tips({
+			// 	title: '请选择要购买的商品'
+			// }, {
+			// 	tab: 3,
+			// 	url: 1
+			// });
+            this.preOrderNo = options.preOrderNo || 0;
 			this.addressId = options.addressId || 0;
 			this.is_address = options.is_address ? true : false;
 			if (this.isLogin) {
@@ -304,7 +337,9 @@
 			this.textareaStatus = true;
 			if (this.isLogin && this.toPay == false) {
 				//this.getaddressInfo();
+				
 			}
+
 			uni.$on("handClick", res => {
 				if (res) {
 					_this.system_store = res.address
@@ -312,16 +347,22 @@
 				// 清除监听
 				uni.$off('handClick');
 			})
+
+			// let pages = getCurrentPages();
+			// let currPage = pages[pages.length - 1]; //当前页面
+			// if (currPage.data.storeItem) {
+			// 	let json = currPage.data.storeItem;
+			// 	this.$set(this, 'system_store', json);
+			// }
 		},
+		/**
+		 * 生命周期函数--监听页面隐藏
+		 */
+		// onHide: function() {
+		// 	console.log(999);
+		// 	this.isClose = true
+		// },
 		methods: {
-			change(e) {
-				console.log("change", e);
-				this.current = e;
-			},
-			changeTextareaStatus: function() {
-				this.textareaStatus = true;
-				this.status = 0;
-			},
 			// 订单详情
 			getloadPreOrder: function() {
 				loadPreOrderApi(this.preOrderNo).then(res => {
@@ -329,12 +370,11 @@
 					this.orderInfoVo = orderInfoVo;
 					this.cartInfo = orderInfoVo.orderDetailList;
 					this.orderProNum = orderInfoVo.orderProNum;
-					this.address.addressId = this.addressId ? this.addressId : orderInfoVo.addressId;
+					this.address.addressId = this.addressId ? this.addressId :orderInfoVo.addressId;
 					this.cartArr[1].title = '可用余额:' + orderInfoVo.userBalance;
 					this.cartArr[1].payStatus = parseInt(res.data.yuePayStatus) === 1 ? 1 : 2;
 					this.cartArr[0].payStatus = parseInt(res.data.payWeixinOpen) === 1 ? 1 : 0;
-					this.store_self_mention = res.data.storeSelfMention == 'true' && this.productType ===
-						'normal' ? true : false;
+					this.store_self_mention = res.data.storeSelfMention == 'true'&& this.productType === 'normal' ? true : false;
 					//调用子页面方法授权后执行获取地址列表
 					this.$nextTick(function() {
 						this.$refs.addressWindow.getAddressList();
@@ -384,6 +424,7 @@
 			 * 跳转门店列表
 			 */
 			showStoreList: function() {
+
 				let _this = this
 				if (this.storeList.length > 0) {
 					uni.navigateTo({
@@ -430,6 +471,52 @@
 				this.shippingType = value;
 				this.computedPrice();
 			},
+			ChangCouponsClone: function() {
+				this.$set(this.coupon, 'coupon', false);
+			},
+			changeTextareaStatus: function() {
+				for (let i = 0, len = this.coupon.list.length; i < len; i++) {
+					this.coupon.list[i].use_title = '';
+					this.coupon.list[i].is_use = 0;
+				}
+				this.textareaStatus = true;
+				this.status = 0;
+				this.$set(this.coupon, 'list', this.coupon.list);
+			},
+			/**
+			 * 处理点击优惠券后的事件
+			 * 
+			 */
+			ChangCoupons: function(e) {
+				// this.usableCoupon = e
+				// this.coupon.coupon = false
+				let index = e,
+					list = this.coupon.list,
+					couponTitle = '请选择',
+					couponId = 0;
+				for (let i = 0, len = list.length; i < len; i++) {
+					if (i != index) {
+						list[i].use_title = '';
+						list[i].isUse = 0;
+					}
+				}
+				if (list[index].isUse) {
+					//不使用优惠券
+					list[index].use_title = '';
+					list[index].isUse = 0;
+				} else {
+					//使用优惠券
+					list[index].use_title = '不使用';
+					list[index].isUse = 1;
+					couponTitle = list[index].name;
+					couponId = list[index].id;
+				}
+				this.couponTitle = couponTitle;
+				this.couponId = couponId;
+				this.$set(this.coupon, 'coupon', false);
+				this.$set(this.coupon, 'list', list);
+				this.computedPrice();
+			},
 			/**
 			 * 使用积分抵扣
 			 */
@@ -452,11 +539,23 @@
 				this.addressInfo = e;
 				this.address.addressId = e.id;
 				this.textareaStatus = true;
+				//this.orderInfoVo.addressId = e;
 				this.address.address = false;
+				//this.getaddressInfo();
 				this.computedPrice();
 			},
 			bindHideKeyboard: function(e) {
 				this.mark = e.detail.value;
+			},
+			/**
+			 * 获取当前金额可用优惠券
+			 * 
+			 */
+			getCouponList: function() {
+				getCouponsOrderPrice(this.preOrderNo).then(res => {
+					this.$set(this.coupon, 'list', res.data);
+					this.openType = 1;
+				});
 			},
 			/*
 			 * 获取默认收货地址或者获取某条地址信息
@@ -494,6 +593,10 @@
 					that.car();
 				}, 500);
 			},
+			couponTap: function() {
+				this.coupon.coupon = true;
+				if(!this.coupon.list.length)this.getCouponList();
+			},
 			car: function() {
 				let that = this;
 				that.animated = false;
@@ -502,7 +605,7 @@
 				let that = this;
 				that.textareaStatus = false;
 				that.address.address = true;
-				that.pagesUrl = '/pages/users/user_address_list/index?preOrderNo=' + this.preOrderNo;
+				that.pagesUrl = '/pages/users/user_address_list/index?preOrderNo='+ this.preOrderNo;
 			},
 			realName: function(e) {
 				this.contacts = e.detail.value;
@@ -514,6 +617,7 @@
 				let that = this;
 				orderCreate(data).then(res => {
 					that.getOrderPay(res.data.orderNo, '支付成功');
+
 				}).catch(err => {
 					uni.hideLoading();
 					return that.$util.Tips({
@@ -528,7 +632,7 @@
 					orderNo: orderNo,
 					payChannel: that.payChannel,
 					payType: that.payType,
-					scene: that.productType === 'normal' ? 0 : 1177 //下单时小程序的场景值
+					scene: that.productType==='normal'? 0 :1177 //下单时小程序的场景值
 				}).then(res => {
 					let jsConfig = res.data.jsConfig;
 					switch (res.data.payType) {
@@ -540,21 +644,20 @@
 								package: jsConfig.packages,
 								signType: jsConfig.signType,
 								paySign: jsConfig.paySign,
-								ticket: that.productType === 'normal' ? null : jsConfig.ticket,
+								ticket: that.productType==='normal'? null : jsConfig.ticket,
 								success: function(ress) {
 									uni.hideLoading();
 									wechatQueryPayResult(orderNo).then(res => {
 										uni.hideLoading();
-										if (that.orderInfoVo.bargainId || that.orderInfoVo
-											.combinationId || that.pinkId || that
-											.orderInfoVo.seckillId) return that.$util
-									.Tips({
-											title: '支付成功',
-											icon: 'success'
-										}, {
-											tab: 4,
-											url: goPages
-										});
+										if (that.orderInfoVo.bargainId || that.orderInfoVo.combinationId || that.pinkId || that
+											.orderInfoVo.seckillId)
+											return that.$util.Tips({
+												title: '支付成功',
+												icon: 'success'
+											}, {
+												tab: 4,
+												url: goPages
+											});
 										return that.$util.Tips({
 											title: '支付成功',
 											icon: 'success'
@@ -568,6 +671,7 @@
 											title: err
 										});
 									})
+								
 								},
 								fail: function(e) {
 									uni.hideLoading();
@@ -655,7 +759,8 @@
 							});
 							setTimeout(() => {
 								location.href = jsConfig.mwebUrl + '&redirect_url=' + window.location
-									.protocol + '//' + window.location.host + goPages + '&status=1';
+									.protocol + '//' + window.location.host +
+									goPages + '&status=1';
 							}, 100)
 							break;
 					}
@@ -683,14 +788,14 @@
 						break;
 					case 'SUCCESS':
 						uni.hideLoading();
-						if (that.orderInfoVo.bargainId || that.orderInfoVo.combinationId || that.pinkId || that
-							.orderInfoVo.seckillId) return that.$util.Tips({
-							title: message,
-							icon: 'success'
-						}, {
-							tab: 4,
-							url: goPages
-						});
+						if (that.orderInfoVo.bargainId || that.orderInfoVo.combinationId || that.pinkId || that.orderInfoVo.seckillId)
+							return that.$util.Tips({
+								title: message,
+								icon: 'success'
+							}, {
+								tab: 4,
+								url: goPages
+							});
 						return that.$util.Tips({
 							title: message,
 							icon: 'success'
@@ -711,14 +816,14 @@
 							paySign: jsConfig.paySign,
 							success: function(res) {
 								uni.hideLoading();
-								if (that.orderInfoVo.bargainId || that.orderInfoVo.combinationId || that
-									.pinkId || that.orderInfoVo.seckillId) return that.$util.Tips({
-									title: '支付成功',
-									icon: 'success'
-								}, {
-									tab: 4,
-									url: goPages
-								});
+								if (that.orderInfoVo.bargainId || that.orderInfoVo.combinationId || that.pinkId || that.orderInfoVo.seckillId)
+									return that.$util.Tips({
+										title: '支付成功',
+										icon: 'success'
+									}, {
+										tab: 4,
+										url: goPages
+									});
 								return that.$util.Tips({
 									title: '支付成功',
 									icon: 'success'
@@ -803,8 +908,10 @@
 				}
 			},
 			SubOrder: function(e) {
+
 				let that = this,
 					data = {};
+
 				if (!that.payType) return that.$util.Tips({
 					title: '请选择支付方式'
 				});
@@ -843,11 +950,13 @@
 					storeId: that.system_store.id || 0,
 					shippingType: that.$util.$h.Add(that.shippingType, 1),
 					payChannel: that.payChannel
+
 				};
 				if (data.payType == 'yue' && parseFloat(that.userInfo.nowMoney) < parseFloat(that.totalPrice))
-				return that.$util.Tips({
-						title: '余额不足！'
-					});
+					return that.$util
+						.Tips({
+							title: '余额不足！'
+						});
 				uni.showLoading({
 					title: '订单支付中'
 				});
@@ -863,12 +972,11 @@
 		}
 	}
 </script>
-<style lang="scss"
-	scoped>
-	.line2 {
+
+<style lang="scss" scoped>
+	.line2{
 		width: 504rpx;
 	}
-
 	.textR {
 		text-align: right;
 	}
@@ -924,7 +1032,10 @@
 	.order-submission .allAddress {
 		width: 100%;
 		background: linear-gradient(to bottom, #e93323 0%, #f5f5f5 100%);
-		padding: 70rpx 30rpx 0 30rpx;
+		// background-image: linear-gradient(to bottom, #e93323 0%, #f5f5f5 100%);
+		// background-image: -webkit-linear-gradient(to bottom, #e93323 0%, #f5f5f5 100%);
+		// background-image: -moz-linear-gradient(to bottom, #e93323 0%, #f5f5f5 100%);
+		padding: 100rpx 30rpx 0 30rpx;
 	}
 
 	.order-submission .allAddress .nav {
@@ -939,6 +1050,55 @@
 	.order-submission .allAddress .nav .item.on {
 		position: relative;
 		width: 230rpx;
+	}
+
+	.order-submission .allAddress .nav .item.on::before {
+		position: absolute;
+		bottom: 0;
+		content: "快递配送";
+		font-size: 28rpx;
+		display: block;
+		height: 0;
+		width: 336rpx;
+		border-width: 0 20rpx 80rpx 0;
+		border-style: none solid solid;
+		border-color: transparent transparent #fff;
+		z-index: 2;
+		border-radius: 14rpx 36rpx 0 0;
+		text-align: center;
+		line-height: 80rpx;
+	}
+
+	.order-submission .allAddress .nav .item:nth-of-type(2).on::before {
+		content: "到店自提";
+		border-width: 0 0 80rpx 20rpx;
+		border-radius: 36rpx 14rpx 0 0;
+	}
+
+	.order-submission .allAddress .nav .item.on2 {
+		position: relative;
+	}
+
+	.order-submission .allAddress .nav .item.on2::before {
+		position: absolute;
+		bottom: 0;
+		content: "到店自提";
+		font-size: 28rpx;
+		display: block;
+		height: 0;
+		width: 401rpx;
+		border-width: 0 0 60rpx 60rpx;
+		border-style: none solid solid;
+		border-color: transparent transparent #f7c1bd;
+		border-radius: 36rpx 14rpx 0 0;
+		text-align: center;
+		line-height: 60rpx;
+	}
+
+	.order-submission .allAddress .nav .item:nth-of-type(1).on2::before {
+		content: "快递配送";
+		border-width: 0 60rpx 60rpx 0;
+		border-radius: 14rpx 36rpx 0 0;
 	}
 
 	.order-submission .allAddress .address {
