@@ -30,8 +30,7 @@
 					<view class='iconfont icon-jiantou'></view>
 				</view>
 				<view class='address acea-row row-between-wrapper'
-					v-if='current == 1'
-					@tap="showStoreList">
+					v-if='current == 1'>
 					<block v-if="storeList.length>0">
 						<view class='addressCon'>
 							<view class='name'>{{system_store.name}}
@@ -44,6 +43,12 @@
 					</block>
 					<block v-else>
 						<view>门店信息 江西省赣州市章贡区万象城7楼</view>
+					</block>
+				</view>
+				<view class='address acea-row row-between-wrapper'
+					v-if='current == 2'>
+					<block>
+						<view>拼桌项目 线下剧本杀</view>
 					</block>
 				</view>
 				<view class='line'>
@@ -76,13 +81,24 @@
 							</view>
 						</view>
 					</view>
-					<view class='item'>
+					<view class='item'
+						v-if='current == 0 ||current == 1'>
 						<view>备注信息</view>
 						<textarea placeholder-class='placeholder'
 							@input='bindHideKeyboard'
 							value=""
 							name="mark"
 							placeholder='请添加备注（150字以内）'></textarea>
+					</view>
+					<view class='item'
+						v-if='current == 2'>
+						<block>
+							<view>活动时间：2022.12.25</view>
+							<view>地点：江西省赣州市章贡区万象城 3楼</view>
+							<view>对象：女</view>
+							<view>活动人数：6</view>
+							<view>买单：AA</view>
+						</block>
 					</view>
 				</view>
 				<view class='wrapper borRadius14'>
