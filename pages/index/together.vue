@@ -45,9 +45,9 @@
 								<view class="label">{{item.info}}</view>
 							</view>
 						</view>
-						<view class="fabuhuodong"
-							@click="goFabu">
-							<view class="fabu">
+						<view class="fabuhuodong">
+							<view class="fabu"
+								@click="goFabu">
 								<view class="icon">
 									<u-icon :name="fabuLogo"
 										color="#000000"
