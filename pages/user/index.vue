@@ -2135,9 +2135,17 @@
 				if (item.activityH5 && item.activityH5.type === "2" && !this.isLogin) {
 					toLogin();
 				} else {
+					var newItem = {
+						"id": 6,
+						"image": "https://ylhl.qishan.xin/up/p/m/2022/12/107674_m_1670210192i50_m.jpg",
+						"nickName": "杨颖",
+						"age": "18"
+					};
+					newItem.image = this.osshttp + item.detail.thumb_image;
+					console.log("newItem.image:", newItem.image);
 					uni.navigateTo({
 						url: `/pages/xiangqin/user_detail/user_detail?item=` + encodeURIComponent(JSON.stringify(
-							item))
+							newItem))
 					})
 				}
 			},
