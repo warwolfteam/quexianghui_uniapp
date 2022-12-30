@@ -2120,6 +2120,7 @@
 		methods: {
 			// 全部资料跳转
 			goAllCollection() {
+				console.log("全部资料跳转");
 				uni.navigateTo({
 					url: '/pages/ArtExhibition/ArtExhibition?goodsType=' + 2
 				})
@@ -2130,16 +2131,13 @@
 			},
 			// 跳转详情
 			goDetails(item, type) {
-				console.log(type);
-				if (item.count == 1 || item.detail.types == 3) {
-					uni.navigateTo({
-						url: "/pages/my_actions/zangpinDetail/zangpinDetail?id=" + item.detail.one_user_collection
-							.id
-					})
+				console.log(item, type);
+				if (item.activityH5 && item.activityH5.type === "2" && !this.isLogin) {
+					toLogin();
 				} else {
 					uni.navigateTo({
-						url: '/pages/my_actions/ArtExhibitionDetailsList/ArtExhibitionDetailsList?goods_id=' + item
-							.goods_id + '&goods_type=' + item.goods_type + '&current=' + type
+						url: `/pages/xiangqin/user_detail/user_detail?item=` + encodeURIComponent(JSON.stringify(
+							item))
 					})
 				}
 			},
