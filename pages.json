@@ -454,7 +454,13 @@
 			"style": {
 				"navigationBarTitleText": "会员资料"
 			}
-		}]
+		},{
+			"path": "all_users/all_users",
+			"style": {
+				"navigationBarTitleText": "已解锁资料"
+			}
+		}
+		]
 	}, {
 		"root": "pages/order_addcart",
 		"name": "order_addcart",

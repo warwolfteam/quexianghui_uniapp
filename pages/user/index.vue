@@ -2122,7 +2122,7 @@
 			goAllCollection() {
 				console.log("全部资料跳转");
 				uni.navigateTo({
-					url: '/pages/ArtExhibition/ArtExhibition?goodsType=' + 2
+					url: '/pages/xiangqin/all_users/all_users'
 				})
 			},
 			// 资料翻页
