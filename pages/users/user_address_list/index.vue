@@ -362,6 +362,9 @@
 </script>
 
 <style lang="scss" scoped>
+	.radio-group{
+		display: inline;
+	}
 	.address-management{
 		padding: 20rpx 30rpx;
 	}
