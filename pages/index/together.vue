@@ -1,67 +1,41 @@
 <template>
 	<view>
-		<view class="page-index"
-			:class="{'bgf':navIndex >0}">
+		<view class="page-index" :class="{'bgf':navIndex >0}">
 			<view class='search acea-row row-between-wrapper'>
 				<view class='input acea-row row-between-wrapper'>
 					<text class='iconfont icon-sousuo2'></text>
-					<input type='text'
-						:value='searchValue'
-						:focus="focus"
-						placeholder='点击搜索商品'
-						placeholder-class='placeholder'
-						@input="setValue"></input>
+					<input type='text' :value='searchValue' :focus="focus" placeholder='点击搜索商品'
+						placeholder-class='placeholder' @input="setValue"></input>
 				</view>
-				<view class='bnt'
-					@tap='searchBut'>搜索</view>
+				<view class='bnt' @tap='searchBut'>搜索</view>
 			</view>
 			<!-- 首页展示 -->
-			<view class="page_content"
-				:style="'margin-top:'+(marTop)+'px;'"
-				v-if="navIndex == 0">
+			<view class="page_content" :style="'margin-top:'+(marTop)+'px;'" v-if="navIndex == 0">
 				<!-- 首页推荐 -->
 				<!-- :class="iSshowH?'on':''" -->
-				<view class="sticky-box"
-					:style="'top:'+(marTop)+'px;'">
-					<scroll-view class="scroll-view_H"
-						style="width: 100%;"
-						scroll-x="true"
-						scroll-with-animation
-						:scroll-left="tabsScrollLeft"
-						@scroll="scroll">
-						<view class="tab nav-bd"
-							id="tab_list">
-							<view id="tab_item"
-								:class="{ 'active': listActive == index}"
-								class="item"
-								v-for="(item, index) in explosiveMoney"
-								:key="index"
-								@click="ProductNavTab(item,index)">
+				<view class="sticky-box" :style="'top:'+(marTop)+'px;'">
+					<scroll-view class="scroll-view_H" style="width: 100%;" scroll-x="true" scroll-with-animation
+						:scroll-left="tabsScrollLeft" @scroll="scroll">
+						<view class="tab nav-bd" id="tab_list">
+							<view id="tab_item" :class="{ 'active': listActive == index}" class="item"
+								v-for="(item, index) in explosiveMoney" :key="index" @click="ProductNavTab(item,index)">
 								<view class="txt">
-									<u-icon :name="item.icon"
-										color="#000000"
-										size="48"></u-icon>
+									<u-icon :name="item.icon" color="#000000" size="48"></u-icon>
 								</view>
 								<view class="label">{{item.info}}</view>
 							</view>
 						</view>
 						<view class="fabuhuodong">
-							<view class="fabu"
-								@click="goFabu">
+							<view class="fabu" @click="goFabu">
 								<view class="icon">
-									<u-icon :name="fabuLogo"
-										color="#000000"
-										size="48"></u-icon>
+									<u-icon :name="fabuLogo" color="#000000" size="48"></u-icon>
 								</view>
 								<view class="tex"> 发布活动 <view class="miaoshu">线下社交活动</view>
 								</view>
 							</view>
-							<view class="huodong"
-								@click="canyuhuodong">
+							<view class="huodong" @click="canyuhuodong">
 								<view class="icon">
-									<u-icon :name="huodongLogo"
-										color="#000000"
-										size="48"></u-icon>
+									<u-icon :name="huodongLogo" color="#000000" size="48"></u-icon>
 								</view>
 								<view class="tex"> 我参与的活动 <view class="miaoshu"></view>
 								</view>
@@ -70,17 +44,11 @@
 					</scroll-view>
 				</view>
 				<!-- 首发新品 -->
-				<view class="index-product-wrapper"
-					:class="iSshowH?'on':''">
-					<view class="list-box animated"
-						:class='tempArr.length > 0?"fadeIn on":""'>
-						<view class="item"
-							v-for="(item,index) in tempArr"
-							:key="index"
-							@click="toTogetherDetail(item)">
+				<view class="index-product-wrapper" :class="iSshowH?'on':''">
+					<view class="list-box animated" :class='tempArr.length > 0?"fadeIn on":""'>
+						<view class="item" v-for="(item,index) in tempArr" :key="index" @click="toTogetherDetail(item)">
 							<view class="pictrue">
-								<image :src="item.image"
-									mode=""></image>
+								<image :src="item.image" mode=""></image>
 							</view>
 							<view class="text-info">
 								<view class="title line1"> 妙儿 </view>
@@ -89,22 +57,16 @@
 								<view class="title line1"> 地点：万象城7楼 </view>
 								<view class="title line2"> 备注：跟所有的烦恼说拜拜，跟所有的快乐say hihi </view>
 								<view class="botton">
-									<u-button type="error"
-										@click="toTogetherDetail(item)"
-										size="mini"
-										:plain="true"
+									<u-button type="error" @click="toTogetherDetail(item)" size="mini" :plain="true"
 										shape="circle">立即拼桌</u-button>
 								</view>
 							</view>
 						</view>
 					</view>
-					<view class='loadingicon acea-row row-center-wrapper'
-						v-if="goodScroll">
-						<text class='loading iconfont icon-jiazai'
-							:hidden='loading==false'></text>
+					<view class='loadingicon acea-row row-center-wrapper' v-if="goodScroll">
+						<text class='loading iconfont icon-jiazai' :hidden='loading==false'></text>
 					</view>
-					<view class="mores-txt flex"
-						v-if="!goodScroll">
+					<view class="mores-txt flex" v-if="!goodScroll">
 						<text>我是有底线的</text>
 					</view>
 				</view>
