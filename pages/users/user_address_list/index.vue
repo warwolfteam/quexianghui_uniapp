@@ -40,12 +40,16 @@
 		</view>
 		<view class='footer acea-row row-between-wrapper'>
 			<!-- #ifdef MP-->
-			<view class='addressBnt bg-color' @click='addAddress'><text class='iconfont icon-tianjiadizhi'></text>添加新地址</view>
-			<view class='addressBnt wxbnt' @click='getWxAddress'><text class='iconfont icon-weixin2'></text>导入微信地址</view>
+			<view class='addressBnt bg-color' @click='addAddress'><text class='iconfont icon-tianjiadizhi'></text>添加新地址
+			</view>
+			<view class='addressBnt wxbnt' @click='getWxAddress'><text class='iconfont icon-weixin2'></text>导入微信地址
+			</view>
 			<!-- #endif -->
 			<!-- #ifdef H5-->
-			<view class='addressBnt bg-color' :class="this.$wechat.isWeixin()?'':'on'" @click='addAddress'><text class='iconfont icon-tianjiadizhi'></text>添加新地址</view>
-			<view v-if="this.$wechat.isWeixin()" class='addressBnt wxbnt' @click='getAddress'><text class='iconfont icon-weixin2'></text>导入微信地址</view>
+			<view class='addressBnt bg-color' :class="this.$wechat.isWeixin()?'':'on'" @click='addAddress'><text
+					class='iconfont icon-tianjiadizhi'></text>添加新地址</view>
+			<view v-if="this.$wechat.isWeixin()" class='addressBnt wxbnt' @click='getAddress'><text
+					class='iconfont icon-weixin2'></text>导入微信地址</view>
 			<!-- #endif -->
 		</view>
 		<!-- #ifdef MP -->
@@ -99,14 +103,14 @@
 			};
 		},
 		computed: mapGetters(['isLogin']),
-		watch:{
-			isLogin:{
-				handler:function(newV,oldV){
-					if(newV){
+		watch: {
+			isLogin: {
+				handler: function(newV, oldV) {
+					if (newV) {
 						this.getUserAddress(true);
 					}
 				},
-				deep:true
+				deep: true
 			}
 		},
 		onLoad(options) {
@@ -172,9 +176,10 @@
 								});
 							},
 							fail: function(res) {
-								if (res.errMsg == 'chooseAddress:cancel') return that.$util.Tips({
-									title: '取消选择'
-								});
+								if (res.errMsg == 'chooseAddress:cancel') return that.$util
+									.Tips({
+										title: '取消选择'
+									});
 							},
 						})
 					},
@@ -306,8 +311,10 @@
 				this.pinkId = '';
 				this.couponId = '';
 				uni.navigateTo({
-					url: '/pages/users/user_address/index?id=' + id + '&cartId=' + cartId + '&pinkId=' + pinkId + '&couponId=' +
-						couponId + '&secKill' + this.secKill + '&combination=' + this.combination + '&bargain=' + this.bargain
+					url: '/pages/users/user_address/index?id=' + id + '&cartId=' + cartId + '&pinkId=' +
+						pinkId + '&couponId=' +
+						couponId + '&secKill' + this.secKill + '&combination=' + this.combination +
+						'&bargain=' + this.bargain
 				})
 			},
 			/**
@@ -348,9 +355,10 @@
 				})
 			},
 			goOrder: function(id) {
-				if(this.preOrderNo){
+				if (this.preOrderNo) {
 					uni.redirectTo({
-						url: '/pages/users/order_confirm/index?is_address=1&preOrderNo=' + this.preOrderNo + '&addressId=' +  id 
+						url: '/pages/users/order_confirm/index?is_address=1&preOrderNo=' + this.preOrderNo +
+							'&addressId=' + id
 					})
 				}
 			}
@@ -362,12 +370,14 @@
 </script>
 
 <style lang="scss" scoped>
-	.radio-group{
+	.radio-group {
 		display: inline;
 	}
-	.address-management{
+
+	.address-management {
 		padding: 20rpx 30rpx;
 	}
+
 	.address-management.fff {
 		background-color: #fff;
 		height: 1300rpx
@@ -376,12 +386,14 @@
 	.line {
 		width: 100%;
 		height: 3rpx;
+
 		image {
 			width: 100%;
 			height: 100%;
 			display: block;
 		}
 	}
+
 	.address-management .item {
 		background-color: #fff;
 		padding: 0 20rpx;
@@ -427,7 +439,7 @@
 		font-size: 38rpx;
 	}
 
-	 .footer {
+	.footer {
 		position: fixed;
 		width: 100%;
 		background-color: #fff;
@@ -437,7 +449,7 @@
 		box-sizing: border-box;
 	}
 
-    .footer .addressBnt {
+	.footer .addressBnt {
 		width: 330rpx;
 		height: 76rpx;
 		border-radius: 50rpx;
@@ -447,18 +459,18 @@
 		color: #fff;
 	}
 
-	 .footer .addressBnt.on {
+	.footer .addressBnt.on {
 		width: 690rpx;
 		margin: 0 auto;
 	}
 
-	 .footer .addressBnt .iconfont {
+	.footer .addressBnt .iconfont {
 		font-size: 35rpx;
 		margin-right: 8rpx;
 		vertical-align: -1rpx;
 	}
 
-	 .footer .addressBnt.wxbnt {
+	.footer .addressBnt.wxbnt {
 		background-color: #fe960f;
 	}
 </style>
