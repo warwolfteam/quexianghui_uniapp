@@ -1,13 +1,11 @@
 <template>
 	<view>
-		<view class="page-index"
-			:class="{'bgf':navIndex >0}">
+		<view class="page-index" :class="{'bgf':navIndex >0}">
 			<!-- #ifdef H5 -->
 			<view class="header">
 				<view class="serch-wrapper flex">
 					<view class="logo">
-						<image :src="logoUrl"
-							mode=""></image>
+						<image :src="logoUrl" mode=""></image>
 					</view>
 					<!-- <navigator url="/pages/goods_search/index" class="input" hover-class="none"><text
 							class="iconfont icon-xiazai5"></text>
@@ -17,14 +15,11 @@
 			<!-- #endif -->
 			<!-- #ifdef MP -->
 			<view class="mp-header">
-				<view class="sys-head"
-					:style="{ height: statusBarHeight }"></view>
-				<view class="serch-box"
-					style="height: 40px;">
+				<view class="sys-head" :style="{ height: statusBarHeight }"></view>
+				<view class="serch-box" style="height: 40px;">
 					<view class="serch-wrapper flex">
 						<view class="logo">
-							<image :src="logoUrl"
-								mode=""></image>
+							<image :src="logoUrl" mode=""></image>
 						</view>
 						<!-- 	<navigator url="/pages/goods_search/index" class="input" hover-class="none"><text
 								class="iconfont icon-xiazai5"></text>
@@ -34,42 +29,26 @@
 			</view>
 			<!-- #endif -->
 			<!-- 首页展示 -->
-			<view class="page_content"
-				:style="'margin-top:'+(marTop)+'px;'"
-				v-if="navIndex == 0">
+			<view class="page_content" :style="'margin-top:'+(marTop)+'px;'" v-if="navIndex == 0">
 				<view class="mp-bg"></view>
 				<!-- banner -->
-				<view class="swiper"
-					v-if="imgUrls.length">
-					<swiper indicator-dots="true"
-						:autoplay="true"
-						:circular="circular"
-						:interval="interval"
-						:duration="duration"
-						indicator-color="rgba(255,255,255,0.6)"
-						indicator-active-color="#fff">
-						<block v-for="(item,index) in imgUrls"
-							:key="index">
+				<view class="swiper" v-if="imgUrls.length">
+					<swiper indicator-dots="true" :autoplay="true" :circular="circular" :interval="interval"
+						:duration="duration" indicator-color="rgba(255,255,255,0.6)" indicator-active-color="#fff">
+						<block v-for="(item,index) in imgUrls" :key="index">
 							<swiper-item>
-								<navigator :url='item.url'
-									class='slide-navigator acea-row row-between-wrapper'
+								<navigator :url='item.url' class='slide-navigator acea-row row-between-wrapper'
 									hover-class='none'>
-									<image :src="item.pic"
-										class="slide-image"
-										lazy-load></image>
+									<image :src="item.pic" class="slide-image" lazy-load></image>
 								</navigator>
 							</swiper-item>
 						</block>
 					</swiper>
 				</view>
 				<!-- menu -->
-				<view class='nav acea-row'
-					v-if="menus.length">
-					<block v-for="(item,index) in menus"
-						:key="index">
-						<navigator class='item'
-							:url='item.url'
-							hover-class='none'>
+				<view class='nav acea-row' v-if="menus.length">
+					<block v-for="(item,index) in menus" :key="index">
+						<navigator class='item' :url='item.url' hover-class='none'>
 							<view class='pictrue'>
 								<image :src='item.pic'></image>
 							</view>
@@ -79,35 +58,23 @@
 				</view>
 				<!-- 首发新品 -->
 				<view class='navtab'>
-					<u-tabs :list="tabList"
-						:is-scroll="false"
-						:current="current"
-						@change="change"></u-tabs>
+					<u-tabs :list="tabList" :is-scroll="false" :current="current" @change="change"></u-tabs>
 				</view>
-				<view class="index-product-wrapper"
-					:class="iSshowH?'on':''">
-					<view class="list-box animated"
-						:class='tempArr.length > 0?"fadeIn on":""'>
-						<view class="item"
-							v-for="(item,index) in tempArr"
-							:key="index"
-							@click="goDetail(item)">
+				<view class="index-product-wrapper" :class="iSshowH?'on':''">
+					<view class="list-box animated" :class='tempArr.length > 0?"fadeIn on":""'>
+						<view class="item" v-for="(item,index) in tempArr" :key="index" @click="goDetail(item)">
 							<view class="pictrue">
-								<image :src="item.image"
-									mode=""></image>
+								<image :src="item.image" mode=""></image>
 							</view>
 							<view class="text-info">
 								<view class="title line2">{{item.nickName}} • {{item.age}}岁</view>
 							</view>
 						</view>
 					</view>
-					<view class='loadingicon acea-row row-center-wrapper'
-						v-if="goodScroll">
-						<text class='loading iconfont icon-jiazai'
-							:hidden='loading==false'></text>
+					<view class='loadingicon acea-row row-center-wrapper' v-if="goodScroll">
+						<text class='loading iconfont icon-jiazai' :hidden='loading==false'></text>
 					</view>
-					<view class="mores-txt flex"
-						v-if="!goodScroll">
+					<view class="mores-txt flex" v-if="!goodScroll">
 						<text>我是有底线的</text>
 					</view>
 				</view>
@@ -568,7 +535,8 @@
 				} else {
 					goShopDetail(item, this.uid).then(res => {
 						uni.navigateTo({
-							url: `/pages/xiangqin/user_detail/user_detail?item=` + encodeURIComponent(JSON.stringify(item))
+							url: `/pages/xiangqin/user_detail/user_detail?item=` + encodeURIComponent(JSON
+								.stringify(item))
 						})
 					})
 				}
